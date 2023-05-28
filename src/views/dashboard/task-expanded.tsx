@@ -9,6 +9,8 @@ import { TaskFormModal } from "./components/task-form-modal"
 export const TaskExpanded: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openSubTask, setOpenSubTask] = useState<boolean>(false)
+  const [deleteTask, setDeleteTask] = useState<boolean>(false)
+  const [inputValue, setInputValue] = useState("")
   const location = useLocation()
   useLayoutEffect(() => {
     document.title = "Task | TaskMinder"
@@ -25,14 +27,37 @@ export const TaskExpanded: React.FC = () => {
         title="Add new sub-task"
         name="subTaskName"
         label="Sub-task Name"
+        btnName={"Done"}
+        onChange={() => {}}
       />
       <TaskFormModal
         open={openModal}
-        value={undefined}
+        value={""}
         handleCancel={() => setOpenModal(false)}
         title="Rename Task"
         name="taskName"
         label="Task Name"
+        btnName={"Done"}
+        onChange={() => {}}
+      />
+      <TaskFormModal
+        open={deleteTask}
+        value={inputValue}
+        handleCancel={() => setDeleteTask(false)}
+        title="Delete Task"
+        formDesc={
+          <span>
+            Are you sure you want to permanently delete this task? Copy task
+            name and paste below{" "}
+            <b className="text-[#ff0000]">{state.cardTitle}</b>
+          </span>
+        }
+        name="taskName"
+        label="Enter Task Name"
+        btnName={"Delete task"}
+        btnColor={true}
+        disabled={inputValue === state.cardTitle ? false : true}
+        onChange={(e: any) => setInputValue(e.target.value)}
       />
       <motion.div
         className="flex items-center gap-2 cursor-pointer"
@@ -83,6 +108,7 @@ export const TaskExpanded: React.FC = () => {
         <Button
           type="primary"
           className="bg-[#F7E8E6] text-primary-color flex items-center justify-center py-5 rounded-none px-5 font-[Epilogue-600] text-[1rem]"
+          onClick={() => setDeleteTask(true)}
         >
           Delete task
         </Button>

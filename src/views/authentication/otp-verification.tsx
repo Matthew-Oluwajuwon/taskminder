@@ -40,7 +40,7 @@ export const OTPVerification: React.FC = () => {
           Verify Account
         </h1>
         <p className="text-[#B8B6B6] font-[Epilogue-400] mt-2 leading-relaxed w-full md:w-1/2 lg:w-full text-center lg:text-left mx-auto lg:mx-0">
-          We have sent a verification code to mathewthecheff@gmail.com, enter it
+          We have sent a verification code to matthewthecheff@gmail.com, enter it
           to complete your sign up process
         </p>
         <Form

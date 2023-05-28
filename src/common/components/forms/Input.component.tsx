@@ -37,7 +37,7 @@ export const CustomInput: React.FC<Props> = ({
       <Input
         type={type}
         placeholder={placeholder}
-        className={`py-3 bg-[#F2F1F1!important] rounded-none ${className}`}
+        className={`py-3 bg-[#F2F1F1!important] border-none rounded-none ${className}`}
         onChange={onChange}
         value={value}
         suffix={suffix}

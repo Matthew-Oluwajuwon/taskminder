@@ -6,27 +6,47 @@ import { CustomInput } from "../../../common/components/forms/Input.component"
 interface Props {
   open: boolean
   handleCancel: () => void
-  value: string;
-  title: string;
-  label: string;
-  name: string;
+  value: string
+  title: any
+  label: string
+  name: string
+  btnName: string
+  formDesc?: any
+  btnColor?: boolean
+  disabled?: boolean
+  onChange: any
 }
 
 type RequiredMark = boolean | "optional"
 
-export const TaskFormModal: React.FC<Props> = ({ handleCancel, open, value, title, name, label }) => {
+export const TaskFormModal: React.FC<Props> = ({
+  handleCancel,
+  open,
+  value,
+  title,
+  name,
+  label,
+  btnName,
+  formDesc,
+  btnColor,
+  disabled,
+  onChange
+}) => {
   const [requiredMark] = useState<RequiredMark>("optional")
   return (
     <ModalComponent
       open={open}
       width={"30rem"}
-      title={
-        <div className="font-[Epilogue-600] text-[1.2rem]">{title}</div>
-      }
+      title={<div className="font-[Epilogue-600] text-[1.2rem]">{title}</div>}
       footer={false}
       closable={false}
       handleCancel={handleCancel}
     >
+      {formDesc && (
+        <p className="font-[Epilogue-[400] text-[1rem] text-[#B8B6B6] mb-5">
+          {formDesc}
+        </p>
+      )}
       <Form
         layout="vertical"
         labelCol={{ span: 24 }}
@@ -48,15 +68,19 @@ export const TaskFormModal: React.FC<Props> = ({ handleCancel, open, value, titl
               type="text"
               value={value}
               className="text-[1rem] font-[Epilogue-400]"
+              onChange={onChange}
             />
           </Col>
           <Col span={24}>
             <Button
               type="primary"
               htmlType="submit"
-              className="bg-primary-color text-[#ffffff] flex items-center justify-center py-5 rounded-none px-14 mx-auto font-[Epilogue-600] text-[1rem]"
+              disabled={disabled}
+              className={`${
+                btnColor && disabled ? `bg-[#E1534130!important]` : btnColor && !disabled ? "bg-[#FF3535]" : "bg-primary-color"
+              } text-[#ffffff!important] border-none flex items-center justify-center py-5 rounded-none px-14 mx-auto font-[Epilogue-600] text-[1rem]`}
             >
-              Done
+              {btnName}
             </Button>
           </Col>
         </Row>
