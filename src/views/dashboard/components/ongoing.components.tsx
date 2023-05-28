@@ -5,10 +5,10 @@ import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom"
 
 export interface OngoingProps {
-  cardTitle: string;
-  noOfDays: number;
-  subTask: number;
-  percent: number;
+  cardTitle: string
+  noOfDays: number
+  subTask: number
+  percent: number
   color: string
 }
 
@@ -52,7 +52,7 @@ export const Ongoing: React.FC = () => {
   ]
 
   const navigate = useNavigate()
-  
+
   const container = {
     hidden: { opacity: 1, scale: 0 },
     visible: {
@@ -90,7 +90,18 @@ export const Ongoing: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           key={index}
         >
-          <Card key={index} className="w-full border-none rounded-none mt-5 cursor-pointer" onClick={() => navigate(`/dashboard/${item.cardTitle?.toLowerCase().replaceAll(" ", "-")}`, {state: item})}>
+          <Card
+            key={index}
+            className="w-full border-none rounded-none mt-5 cursor-pointer"
+            onClick={() =>
+              navigate(
+                `/dashboard/ongoing-task?task=${item.cardTitle
+                  ?.toLowerCase()
+                  .replaceAll(" ", "-")}`,
+                { state: item },
+              )
+            }
+          >
             <div key={index} className="flex justify-between items-center">
               <h1 className="font-[Epilogue-500] text-[1rem] text-black">
                 {item.cardTitle}

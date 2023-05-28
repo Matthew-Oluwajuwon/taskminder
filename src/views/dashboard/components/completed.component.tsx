@@ -77,9 +77,9 @@ export const Completed: React.FC = () => {
     <motion.div variants={container} initial="hidden" animate="visible">
       {items.map((item, index) => (
         <motion.div
-          variants={children}
-          className="w-full border-none rounded-none mt-5 cursor-pointer"
-          initial={{ opacity: 0, scale: 0.5 }}
+        className="w-full border-none rounded-none mt-5 cursor-pointer"
+        variants={children}
+        initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
             duration: 0.5,
@@ -95,7 +95,7 @@ export const Completed: React.FC = () => {
             className="w-full border-none rounded-none mt-5 cursor-pointer"
             onClick={() =>
               navigate(
-                `/dashboard/${item.cardTitle
+                `/dashboard/completed-task?task=${item.cardTitle
                   ?.toLowerCase()
                   .replaceAll(" ", "-")}`,
                 { state: item },

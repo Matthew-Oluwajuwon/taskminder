@@ -92,15 +92,7 @@ export const Pending: React.FC = () => {
         >
           <Card
           key={index}
-            className="w-full border-none rounded-none mt-5 cursor-pointer"
-            onClick={() =>
-              navigate(
-                `/dashboard/${item.cardTitle
-                  ?.toLowerCase()
-                  .replaceAll(" ", "-")}`,
-                { state: item },
-              )
-            }
+            className="w-full border-none rounded-none mt-5"
           >
             <div key={index} className="flex justify-between items-center">
               <h1 className="font-[Epilogue-500] text-[1rem] text-black">

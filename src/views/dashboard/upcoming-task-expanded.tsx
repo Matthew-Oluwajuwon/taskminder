@@ -3,12 +3,11 @@ import { useLocation } from "react-router-dom"
 import { OngoingProps } from "./components/ongoing.components"
 import BackIcon from "../../assets/icons/back.svg"
 import { motion } from "framer-motion"
-import { Button, Card, Checkbox, Typography } from "antd"
+import { Button, Checkbox, Typography } from "antd"
 import { TaskFormModal } from "./components/task-form-modal"
-import checked from "../../assets/icons/checked.svg"
-import unchecked from "../../assets/icons/unchecked.svg"
+import { UpcomingProp } from "./components/upcoming.component"
 
-export const TaskExpanded: React.FC = () => {
+export const UpcomingTaskExpanded: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openSubTask, setOpenSubTask] = useState<boolean>(false)
   const [deleteTask, setDeleteTask] = useState<boolean>(false)
@@ -17,10 +16,10 @@ export const TaskExpanded: React.FC = () => {
   const [subTask, setSubTask] = useState<string>()
   const location = useLocation()
   useLayoutEffect(() => {
-    document.title = "Task | TaskMinder"
+    document.title = "Upcoming Task | TaskMinder"
   }, [])
 
-  const state: OngoingProps = location.state
+  const state: UpcomingProp = location.state
 
   const onFinish = useCallback(() => {
     setSubTasks([...subTasks, subTask as string])
@@ -38,6 +37,27 @@ export const TaskExpanded: React.FC = () => {
     },
     [subTasks],
   )
+  
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.5,
+        staggerChildren: 0.5,
+        type: "spring",
+      },
+    },
+  }
+
+  const children = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  }
 
   return (
     <div className="mt-10">
@@ -74,7 +94,7 @@ export const TaskExpanded: React.FC = () => {
             <b className="text-[#ff0000]">{state.cardTitle}</b>
           </span>
         }
-        name="taskName"
+        name="deleteTaskName"
         label="Enter Task Name"
         btnName={"Delete task"}
         btnColor={true}
@@ -116,21 +136,20 @@ export const TaskExpanded: React.FC = () => {
       </div>
       <div className="flex justify-between items-center">
         <h1 className="text-[1.05rem] font-[Epilogue-500]">Sub-tasks</h1>
-        <span className="flex gap-1 items-center">
-          <span className={`font-semibold`} style={{ color: state.color }}>
-            {state.percent}%
-          </span>
-          done
-        </span>
+        <p className="text-[#5C5C5C] font-[Epilogue-400] text-[0.8rem]">
+          {state.date}
+        </p>
       </div>
-      <div className="mt-5">
+      <motion.div variants={container}
+        initial="hidden"
+        animate="visible" className="mt-5">
         {subTasks.map((subsTask, index) => (
-          <div
+          <motion.div
+          variants={children}
             key={index}
             className="rounded-none border-none bg-[#ffffff] p-5 flex justify-between mb-5 items-center"
           >
             <span className="flex items-center gap-3 text-[1rem] text-[#525252]">
-              <Checkbox />
               {subsTask}
             </span>
             <Button
@@ -140,9 +159,9 @@ export const TaskExpanded: React.FC = () => {
             >
               remove sub-task
             </Button>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
       <div className="flex items-center gap-5 mx-auto justify-center mt-10">
         <Button
           type="primary"

@@ -89,7 +89,7 @@ export const UpcomingComponent: React.FC = () => {
             className="w-full border-none rounded-none mt-5 cursor-pointer"
             onClick={() =>
               navigate(
-                `/dashboard/${item.cardTitle
+                `/dashboard/upcoming-task?task=${item.cardTitle
                   ?.toLowerCase()
                   .replaceAll(" ", "-")}`,
                 { state: item },

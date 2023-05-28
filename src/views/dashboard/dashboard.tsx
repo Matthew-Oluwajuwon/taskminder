@@ -12,7 +12,7 @@ export const Dashboard: React.FC = () => {
   }, [])
 
   const date = new Date().toUTCString().slice(5, 16)
-  const [tabKey, setTabKey] = useState<string>("1");
+  const [tabKey, setTabKey] = useState<string>("1")
   const [openDrawer, setOpenDrawer] = useState<boolean>(false)
 
   const handleTabChange = (e: string) => {
@@ -113,7 +113,10 @@ export const Dashboard: React.FC = () => {
   return (
     <>
       <header className="flex justify-between items-start mt-2 md:mt-8">
-        <div onClick={() => setOpenDrawer(true)} className="flex items-start sm:items-center justify-center gap-3 cursor-pointer hover:scale-95 hover:transition-all">
+        <div
+          onClick={() => setOpenDrawer(true)}
+          className="flex items-start sm:items-center justify-center gap-3 cursor-pointer hover:scale-95 hover:transition-all"
+        >
           <section>
             <img src={Avatar} alt="" />
           </section>
@@ -130,8 +133,95 @@ export const Dashboard: React.FC = () => {
           {date}
         </h1>
       </header>
-      <Drawer open={openDrawer} width="55%" closable={false} placement="left" onClose={() => setOpenDrawer(false)}>
-        
+      <Drawer
+        open={openDrawer}
+        width={window.innerWidth > 992 ? "55%" : "95%"}
+        closable={false}
+        placement="left"
+        onClose={() => setOpenDrawer(false)}
+      >
+        <div className="flex flex-col items-end relative w-full h-full lg:w-[50%] float-right">
+          <div>
+            <div className="flex items-center justify-start gap-3">
+              <section>
+                <img src={Avatar} alt="" />
+              </section>
+              <section>
+                <h1 className="text-primary-color font-[Epilogue-500] text-[0.9rem] md:text-[1.2rem] sm:-mt-5">
+                  matthewTheChef
+                </h1>
+              </section>
+            </div>
+            <div className="mt-10 leading-loose">
+              <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
+                Personal Information
+              </h1>
+              <div className="text-[#5C5C5C] font-[Epilogue-400] text-[1rem]">
+                <h2 className="flex items-center justify-between">
+                  Username:&nbsp;{" "}
+                  <span className="text-[#000000]">matthewTheChef</span>
+                </h2>
+                <h2 className="flex items-center justify-between">
+                  Email Address:&nbsp;{" "}
+                  <span className="text-[#000000]">
+                    matthewthechef@gmail.com
+                  </span>
+                </h2>
+                <p className="text-primary-color cursor-pointer text-[1rem] font-[Epilogue-400]">
+                  Edit
+                </p>
+              </div>
+              <div className="mt-10 leading-loose">
+                <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
+                  Security
+                </h1>
+                <div className="text-[#5C5C5C] font-[Epilogue-400] text-[1rem]">
+                  <h2 className="flex items-center justify-between">
+                    Password:&nbsp;{" "}
+                    <span className="text-[#E15341] cursor-pointer">
+                      Change Password
+                    </span>
+                  </h2>
+                </div>
+              </div>
+              <div className="mt-10 leading-loose">
+                <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
+                  Statistics
+                </h1>
+                <div className="text-[#5C5C5C] font-[Epilogue-400] text-[1rem]">
+                  <h2 className="flex items-center justify-between">
+                    Total Number of Task:&nbsp;{" "}
+                    <span className="text-[#000000] cursor-pointer font-bold">
+                      64
+                    </span>
+                  </h2>
+                  <h2 className="flex items-center justify-between">
+                    Number of Ongoing Task:&nbsp;{" "}
+                    <span className="text-[#000000] cursor-pointer">12</span>
+                  </h2>
+                  <h2 className="flex items-center justify-between">
+                    Number of Upcoming Task:&nbsp;{" "}
+                    <span className="text-[#000000] cursor-pointer">38</span>
+                  </h2>
+                  <h2 className="flex items-center justify-between">
+                    Number of Completed Task:&nbsp;{" "}
+                    <span className="text-[#000000] cursor-pointer">8</span>
+                  </h2>
+                  <h2 className="flex items-center justify-between">
+                    Number of Pending Task:&nbsp;{" "}
+                    <span className="text-[#ff0000] cursor-pointer">2</span>
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Button
+            type="primary"
+            className="bg-[#F7E8E6] mb-5 mx-auto absolute bottom-0 left-1/2 -translate-x-1/2 text-primary-color flex items-center justify-center py-5 rounded-none px-5 font-[Epilogue-600] text-[1rem]"
+          >
+            Logout
+          </Button>
+        </div>
       </Drawer>
       <main className="my-5">
         <h1 className="text-[#000000] font-[Epilogue-500] text-[1.2rem]">
