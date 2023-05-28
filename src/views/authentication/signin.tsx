@@ -1,12 +1,26 @@
 import { Col, Form, FormProps, Row } from "antd"
 import { motion } from "framer-motion"
-import React, { useLayoutEffect, useState } from "react"
+import React, { useCallback, useLayoutEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { CustomInput } from "../../common/components/forms/Input.component"
 import { SubmitButton } from "../../common/components/forms/submitButton.component"
 
+interface Auth {
+  email: string
+  password: string
+}
+
 export const SignIn: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [auth, setAuth] = useState<Auth>({
+    email: "",
+    password: "",
+  })
+
+  const setRequest = useCallback((value: any, key: keyof Auth) => {
+    setAuth({ ...auth, [key]: value })
+  }, [auth])
+
   useLayoutEffect(() => {
     document.title = "Signin | TaskMinder"
   }, [])
@@ -42,11 +56,11 @@ export const SignIn: React.FC = () => {
         fields={[
           {
             name: "email",
-            value: undefined,
+            value: auth.email,
           },
           {
             name: "password",
-            value: undefined,
+            value: auth.password,
           },
         ]}
       >
@@ -56,7 +70,8 @@ export const SignIn: React.FC = () => {
               name="email"
               type="email"
               label="Enter Email Address"
-              value={undefined}
+              value={auth.email}
+              onChange={(e) => setRequest(e.target.value, "email")}
               rule={[
                 {
                   required: true,
@@ -72,9 +87,10 @@ export const SignIn: React.FC = () => {
             <CustomInput
               label="Enter Password"
               name="password"
-              value={undefined}
+              value={auth.password}
               rule={[{ required: true }]}
               type={showPassword ? "text" : "password"}
+              onChange={(e) => setRequest(e.target.value, "password")}
               suffix={
                 <span
                   className="font-bold text-[#5C5C5C] font-[Epilogue-500] px-3 cursor-pointer hover:scale-95 hover:transition-all"

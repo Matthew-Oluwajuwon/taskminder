@@ -44,7 +44,7 @@ export const OTPVerification: React.FC = () => {
           to complete your sign up process
         </p>
         <Form
-          className="lg:w-[60%] mt-10 mx-auto lg:mx-0"
+          className="lg:w-[60%] w-full mt-10 mx-auto lg:mx-0"
           {...formConfig}
           fields={[
             {

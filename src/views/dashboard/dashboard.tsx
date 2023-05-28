@@ -112,13 +112,13 @@ export const Dashboard: React.FC = () => {
 
   return (
     <>
-      <header className="flex items-center justify-between">
-        <div onClick={() => setOpenDrawer(true)} className="flex items-center justify-center gap-3 mt-8 cursor-pointer hover:scale-95 hover:transition-all">
+      <header className="flex justify-between items-start mt-2 md:mt-8">
+        <div onClick={() => setOpenDrawer(true)} className="flex items-start sm:items-center justify-center gap-3 cursor-pointer hover:scale-95 hover:transition-all">
           <section>
             <img src={Avatar} alt="" />
           </section>
           <section>
-            <h1 className="text-primary-color font-[Epilogue-500] text-[1.2rem]">
+            <h1 className="text-primary-color font-[Epilogue-500] text-[0.9rem] md:text-[1.2rem] sm:-mt-5">
               Aloha👋🏽 matthewTheChef
             </h1>
             <p className="font-[Epilogue-400] text-[0.8rem] text-[#B8B6B6]">
@@ -126,9 +126,9 @@ export const Dashboard: React.FC = () => {
             </p>
           </section>
         </div>
-        <div className="text-[#303030] font-[Epilogue-500] text-[0.8rem] sm:text-[1.2rem]">
+        <h1 className="text-[#303030] font-[Epilogue-500] text-[0.8rem] sm:text-[0.9rem] md:text-[1.2rem]">
           {date}
-        </div>
+        </h1>
       </header>
       <Drawer open={openDrawer} width="55%" closable={false} placement="left" onClose={() => setOpenDrawer(false)}>
         

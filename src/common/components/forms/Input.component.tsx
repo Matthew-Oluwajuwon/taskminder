@@ -1,6 +1,5 @@
 import { Form, Input } from "antd"
 import React from "react"
-import TextArea from "antd/es/input/TextArea"
 import { Rule } from "antd/es/form"
 
 interface Props {
@@ -11,7 +10,8 @@ interface Props {
   suffix?: React.ReactNode
   type: string
   placeholder?: string
-  className?: any
+  className?: any;
+  onChange: (e: any) => void
 }
 
 export const CustomInput: React.FC<Props> = ({
@@ -23,6 +23,7 @@ export const CustomInput: React.FC<Props> = ({
   suffix,
   placeholder,
   className,
+  onChange
 }) => {
   return (
     <Form.Item
@@ -37,7 +38,7 @@ export const CustomInput: React.FC<Props> = ({
         type={type}
         placeholder={placeholder}
         className={`py-3 bg-[#F2F1F1!important] rounded-none ${className}`}
-        // onChange={(e) => setFormRequest(e.target.value, formFieldName)}
+        onChange={onChange}
         value={value}
         suffix={suffix}
       />
