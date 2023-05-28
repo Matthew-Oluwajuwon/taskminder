@@ -136,7 +136,7 @@ export const TaskExpanded: React.FC = () => {
             <Button
               type="text"
               onClick={() => remove(index)}
-              className="text-primary-color hover:bg-[#F7E8E6!important] rounded-none py-5 px-3 flex justify-center items-center hover:text-[#E15341!important] font-[Epilogue-500] text-[1rem]"
+              className="text-[#FF3535] hover:bg-[#F7E8E6!important] rounded-none py-5 px-3 flex justify-center items-center hover:text-[#E15341!important] font-[Epilogue-500] text-[1rem]"
             >
               remove sub-task
             </Button>
