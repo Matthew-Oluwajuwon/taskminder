@@ -1,7 +1,7 @@
-import { Button, Col, Form, FormProps, Input, Row } from "antd"
+import { Col, Form, FormProps, Row } from "antd"
 import { motion } from "framer-motion"
 import React, { useLayoutEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { CustomInput } from "../../common/components/forms/Input.component"
 import { SubmitButton } from "../../common/components/forms/submitButton.component"
 
@@ -15,6 +15,7 @@ export const SignIn: React.FC = () => {
     labelCol: { span: 24 },
     wrapperCol: { span: 24 },
   }
+  const navigate = useNavigate()
   return (
     <motion.div
       initial={{ scale: 0 }}
@@ -37,6 +38,7 @@ export const SignIn: React.FC = () => {
       <Form
         className="lg:w-[75%] xl:w-[60%] mt-10"
         {...formConfig}
+        onFinish={() => navigate("/dashboard")}
         fields={[
           {
             name: "email",
