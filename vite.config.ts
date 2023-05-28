@@ -10,7 +10,15 @@ export default defineConfig({
   build: {
     outDir: "build",
     sourcemap: true,
-    chunkSizeWarningLimit: 10000000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Define your manual chunks here
+          // Example:
+          myChunkName: ["react", "react-dom"],
+        },
+      },
+    },
   },
   test: {
     globals: true,
