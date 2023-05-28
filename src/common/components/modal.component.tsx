@@ -4,7 +4,7 @@ import React from "react"
 interface ModalProps {
   open: boolean
   footer: any
-  title: string
+  title: any
   closable: boolean
   maskClosable: any
   handleCancel: () => void

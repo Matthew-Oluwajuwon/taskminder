@@ -1,16 +1,20 @@
-import React, { useLayoutEffect, useState } from "react"
+import React, { useCallback, useLayoutEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import { OngoingProps } from "./components/ongoing.components"
 import BackIcon from "../../assets/icons/back.svg"
 import { motion } from "framer-motion"
-import { Button, Card, Typography } from "antd"
+import { Button, Card, Checkbox, Typography } from "antd"
 import { TaskFormModal } from "./components/task-form-modal"
+import checked from "../../assets/icons/checked.svg"
+import unchecked from "../../assets/icons/unchecked.svg"
 
 export const TaskExpanded: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openSubTask, setOpenSubTask] = useState<boolean>(false)
   const [deleteTask, setDeleteTask] = useState<boolean>(false)
   const [inputValue, setInputValue] = useState("")
+  const [subTasks, setSubTasks] = useState<string[]>([])
+  const [subTask, setSubTask] = useState<string>()
   const location = useLocation()
   useLayoutEffect(() => {
     document.title = "Task | TaskMinder"
@@ -18,21 +22,39 @@ export const TaskExpanded: React.FC = () => {
 
   const state: OngoingProps = location.state
 
+  const onFinish = useCallback(() => {
+    setSubTasks([...subTasks, subTask as string])
+    setOpenSubTask(false)
+    setSubTask("")
+  }, [subTask, subTasks])
+
+  const remove = useCallback(
+    (id: number) => {
+      setSubTasks(
+        subTasks.filter((_x, i) => {
+          return i !== id
+        }),
+      )
+    },
+    [subTasks],
+  )
+
   return (
     <div className="mt-10">
       <TaskFormModal
         open={openSubTask}
-        value={state.cardTitle}
+        value={subTask as string}
         handleCancel={() => setOpenSubTask(false)}
         title="Add new sub-task"
         name="subTaskName"
         label="Sub-task Name"
         btnName={"Done"}
-        onChange={() => {}}
+        onFinish={onFinish}
+        onChange={(e: any) => setSubTask(e.target.value)}
       />
       <TaskFormModal
         open={openModal}
-        value={""}
+        value={state.cardTitle}
         handleCancel={() => setOpenModal(false)}
         title="Rename Task"
         name="taskName"
@@ -102,7 +124,24 @@ export const TaskExpanded: React.FC = () => {
         </span>
       </div>
       <div className="mt-5">
-        <Card className="rounded-none border-none"></Card>
+        {subTasks.map((subsTask, index) => (
+          <div
+            key={index}
+            className="rounded-none border-none bg-[#ffffff] p-5 flex justify-between mb-5 items-center"
+          >
+            <span className="flex items-center gap-3 text-[1rem] text-[#525252]">
+              <Checkbox />
+              {subsTask}
+            </span>
+            <Button
+              type="text"
+              onClick={() => remove(index)}
+              className="text-primary-color hover:bg-[#F7E8E6!important] rounded-none py-5 px-3 flex justify-center items-center hover:text-[#E15341!important] font-[Epilogue-500] text-[1rem]"
+            >
+              remove sub-task
+            </Button>
+          </div>
+        ))}
       </div>
       <div className="flex items-center gap-5 mx-auto justify-center mt-10">
         <Button

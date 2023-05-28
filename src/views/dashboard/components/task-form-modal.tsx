@@ -15,6 +15,7 @@ interface Props {
   btnColor?: boolean
   disabled?: boolean
   onChange: any
+  onFinish?: any
 }
 
 type RequiredMark = boolean | "optional"
@@ -30,7 +31,8 @@ export const TaskFormModal: React.FC<Props> = ({
   formDesc,
   btnColor,
   disabled,
-  onChange
+  onChange,
+  onFinish,
 }) => {
   const [requiredMark] = useState<RequiredMark>("optional")
   return (
@@ -51,9 +53,10 @@ export const TaskFormModal: React.FC<Props> = ({
         layout="vertical"
         labelCol={{ span: 24 }}
         wrapperCol={{ span: 24 }}
+        onFinish={onFinish}
         fields={[
           {
-            name: "taskName",
+            name,
             value,
           },
         ]}
@@ -77,7 +80,11 @@ export const TaskFormModal: React.FC<Props> = ({
               htmlType="submit"
               disabled={disabled}
               className={`${
-                btnColor && disabled ? `bg-[#E1534130!important]` : btnColor && !disabled ? "bg-[#FF3535]" : "bg-primary-color"
+                btnColor && disabled
+                  ? `bg-[#E1534130!important]`
+                  : btnColor && !disabled
+                  ? "bg-[#FF3535]"
+                  : "bg-primary-color"
               } text-[#ffffff!important] border-none flex items-center justify-center py-5 rounded-none px-14 mx-auto font-[Epilogue-600] text-[1rem]`}
             >
               {btnName}
