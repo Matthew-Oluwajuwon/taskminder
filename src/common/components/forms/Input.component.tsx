@@ -1,17 +1,17 @@
-import { Form, Input } from "antd";
-import React from "react";
-import TextArea from "antd/es/input/TextArea";
-import { Rule } from "antd/es/form";
+import { Form, Input } from "antd"
+import React from "react"
+import TextArea from "antd/es/input/TextArea"
+import { Rule } from "antd/es/form"
 
 interface Props {
-  label: string;
-  name: string;
-  value: any;
-  rule: Rule[];
-  suffix?: React.ReactNode;
-  type: string;
-  placeholder?: string;
-  className?: any;
+  label: string
+  name: string
+  value: any
+  rule: Rule[]
+  suffix?: React.ReactNode
+  type: string
+  placeholder?: string
+  className?: any
 }
 
 export const CustomInput: React.FC<Props> = ({
@@ -22,15 +22,12 @@ export const CustomInput: React.FC<Props> = ({
   type,
   suffix,
   placeholder,
-  className
+  className,
 }) => {
-
   return (
     <Form.Item
       label={
-        <span className="text-[#5C5C5C] font-[Epilogue-600]">
-          {label}
-        </span>
+        <span className="text-[#5C5C5C] font-[Epilogue-600]">{label}</span>
       }
       name={name}
       required
@@ -45,5 +42,5 @@ export const CustomInput: React.FC<Props> = ({
         suffix={suffix}
       />
     </Form.Item>
-  );
-};
+  )
+}
