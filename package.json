@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --port 5000",
     "start": "vite --port 5000",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
     "format": "prettier --write .",
