@@ -1,0 +1,39 @@
+import { Modal } from "antd"
+import React from "react"
+
+interface ModalProps {
+  open: boolean
+  footer: any
+  title: string
+  closable: boolean
+  maskClosable: any
+  handleCancel: () => void
+  children: any
+  width: any
+}
+
+export const ModalComponent: React.FC<ModalProps> = ({
+  closable,
+  footer,
+  handleCancel,
+  maskClosable,
+  open,
+  title,
+  children,
+  width,
+}) => {
+  return (
+    <Modal
+      open={open}
+      footer={footer}
+      title={title}
+      width={width}
+      closable={closable}
+      onCancel={handleCancel}
+      maskClosable={maskClosable}
+      centered
+    >
+      {children}
+    </Modal>
+  )
+}
