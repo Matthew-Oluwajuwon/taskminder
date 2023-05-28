@@ -1,4 +1,6 @@
-export { Dashboard } from "./dashboard";
-export { OngoingTaskExpanded } from "./ongoing-task-expanded";
-export { CompletedTaskExpanded } from "./completed-task-expanded";
-export { UpcomingTaskExpanded } from './upcoming-task-expanded';
+/* eslint-disable prettier/prettier */
+export { Dashboard } from './dashboard';
+export { OngoingTaskExpanded } from "./ongoing-task-expanded"
+export { CompletedTaskExpanded } from "./completed-task-expanded"
+export { UpcomingTaskExpanded } from "./upcoming-task-expanded"
+export { CreateNewTask } from "./components/create-new-task"

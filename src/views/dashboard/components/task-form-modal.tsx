@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from "react"
 import { ModalComponent } from "../../../common/components/modal.component"
 import { Button, Col, Form, Row } from "antd"

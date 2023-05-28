@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Form, Input } from "antd"
 import React from "react"
 import { Rule } from "antd/es/form"
@@ -11,7 +12,7 @@ interface Props {
   type: string
   placeholder?: string
   className?: any;
-  onChange: (e: any) => void
+  onChange?: (e: any) => void
 }
 
 export const CustomInput: React.FC<Props> = ({

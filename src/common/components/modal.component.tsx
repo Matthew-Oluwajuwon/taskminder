@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Modal } from "antd"
 import React from "react"
 
@@ -6,9 +7,9 @@ interface ModalProps {
   footer: any
   title: any
   closable: boolean
-  maskClosable: any
-  handleCancel: () => void
-  children: any
+  maskClosable?: any
+  handleCancel?: () => void
+  children?: any
   width: any
 }
 

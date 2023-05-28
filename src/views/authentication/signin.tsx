@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Col, Form, FormProps, Row } from "antd"
 import { motion } from "framer-motion"
 import React, { useCallback, useLayoutEffect, useState } from "react"
@@ -17,9 +18,12 @@ export const SignIn: React.FC = () => {
     password: "",
   })
 
-  const setRequest = useCallback((value: any, key: keyof Auth) => {
-    setAuth({ ...auth, [key]: value })
-  }, [auth])
+  const setRequest = useCallback(
+    (value: any, key: keyof Auth) => {
+      setAuth({ ...auth, [key]: value })
+    },
+    [auth],
+  )
 
   useLayoutEffect(() => {
     document.title = "Signin | TaskMinder"

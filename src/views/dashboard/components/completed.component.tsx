@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Card, Progress } from "antd"
 import React from "react"
 import More from "../../../assets/icons/more.svg"
@@ -6,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 
 export interface CompletedProp {
   cardTitle: string
-  date: string;
+  date: string
   subTask: number
   percent: number
   color: string
@@ -77,9 +78,9 @@ export const Completed: React.FC = () => {
     <motion.div variants={container} initial="hidden" animate="visible">
       {items.map((item, index) => (
         <motion.div
-        className="w-full border-none rounded-none mt-5 cursor-pointer"
-        variants={children}
-        initial={{ opacity: 0, scale: 0.5 }}
+          className="w-full border-none rounded-none mt-5 cursor-pointer"
+          variants={children}
+          initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
             duration: 0.5,
@@ -91,7 +92,7 @@ export const Completed: React.FC = () => {
           key={index}
         >
           <Card
-          key={index}
+            key={index}
             className="w-full border-none rounded-none mt-5 cursor-pointer"
             onClick={() =>
               navigate(
@@ -109,7 +110,7 @@ export const Completed: React.FC = () => {
               <img src={More} alt="" />
             </div>
             <div className="flex justify-between items-center my-1 font-[Epilogue-500]">
-                <span className="font-[Epilogue-600]">{item.date}</span>
+              <span className="font-[Epilogue-600]">{item.date}</span>
               <p>
                 <span className="font-[Epilogue-600]">{item.subTask}</span>{" "}
                 sub-tasks
@@ -118,7 +119,7 @@ export const Completed: React.FC = () => {
             <div className="flex items-center justify-between">
               <Progress
                 percent={item.percent}
-                size={["90%", 5]}
+                size={[500, 5]}
                 strokeColor={item.color}
                 showInfo={false}
               />

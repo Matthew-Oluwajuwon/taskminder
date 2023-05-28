@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Card, Progress } from "antd"
 import React from "react"
 import More from "../../../assets/icons/more.svg"
@@ -121,7 +122,7 @@ export const Ongoing: React.FC = () => {
             <div className="flex items-center justify-between">
               <Progress
                 percent={item.percent}
-                size={["90%", 5]}
+                size={[500, 5]}
                 strokeColor={item.color}
                 showInfo={false}
               />

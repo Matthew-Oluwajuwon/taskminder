@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Col, Form, FormProps, Row } from "antd"
 import { motion } from "framer-motion"
 import React, { useLayoutEffect } from "react"
@@ -24,7 +25,7 @@ export const OTPVerification: React.FC = () => {
         <p className="text-primary-color text-[1.2rem] font-[Epilogue-500]">
           back
         </p>
-      </div>        
+      </div>
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -40,8 +41,8 @@ export const OTPVerification: React.FC = () => {
           Verify Account
         </h1>
         <p className="text-[#B8B6B6] font-[Epilogue-400] mt-2 leading-relaxed w-full md:w-1/2 lg:w-full text-center lg:text-left mx-auto lg:mx-0">
-          We have sent a verification code to matthewthecheff@gmail.com, enter it
-          to complete your sign up process
+          We have sent a verification code to matthewthecheff@gmail.com, enter
+          it to complete your sign up process
         </p>
         <Form
           className="lg:w-[60%] w-full mt-10 mx-auto lg:mx-0"
@@ -70,7 +71,7 @@ export const OTPVerification: React.FC = () => {
                   inputStyle={{
                     borderColor: "#F2F1F1",
                     backgroundColor: "#F2F1F1",
-                    margin: "0.2rem"
+                    margin: "0.2rem",
                   }}
                   inputFocusStyle={{ borderColor: "#E15341" }}
                   //   onComplete={(value) => {

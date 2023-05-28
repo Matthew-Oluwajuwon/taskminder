@@ -1,4 +1,5 @@
-import { Button, Col, Form, FormProps, Input, Row } from "antd"
+/* eslint-disable prettier/prettier */
+import { Col, Form, FormProps, Row } from "antd"
 import { motion } from "framer-motion"
 import React, { useLayoutEffect, useState } from "react"
 import { Link } from "react-router-dom"
@@ -32,7 +33,7 @@ export const SignUp: React.FC = () => {
       </h1>
       <p className="text-[#B8B6B6] font-[Epilogue-400] mt-2 leading-relaxed">
         Create, track and execute task the easy way with{" "}
-        <span className="text-primary-color">{" "}TaskMinder</span>
+        <span className="text-primary-color"> TaskMinder</span>
       </p>
       <Form
         className="lg:w-[75%] xl:w-[60%] mt-10"

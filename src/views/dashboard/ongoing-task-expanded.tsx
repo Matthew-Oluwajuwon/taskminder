@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useCallback, useLayoutEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import { OngoingProps } from "./components/ongoing.components"
@@ -36,7 +37,7 @@ export const OngoingTaskExpanded: React.FC = () => {
     },
     [subTasks],
   )
-  
+
   const container = {
     hidden: { opacity: 1, scale: 0 },
     visible: {
@@ -142,12 +143,15 @@ export const OngoingTaskExpanded: React.FC = () => {
           done
         </span>
       </div>
-      <motion.div variants={container}
+      <motion.div
+        variants={container}
         initial="hidden"
-        animate="visible" className="mt-5">
+        animate="visible"
+        className="mt-5"
+      >
         {subTasks.map((subsTask, index) => (
           <motion.div
-          variants={children}
+            variants={children}
             key={index}
             className="rounded-none border-none bg-[#ffffff] p-5 flex justify-between mb-5 items-center"
           >

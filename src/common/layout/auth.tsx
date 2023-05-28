@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from "react"
 import { Outlet, useLocation } from "react-router-dom"
 import Logo from "../../assets/images/logo.svg"
@@ -31,7 +32,9 @@ const AuthLayout: React.FC = () => {
             TaskMinder
           </div>
           <div
-            className={`${data ? "hidden" : "flex"} md:hidden items-center justify-center gap-1 mr-2 cursor-pointer hover:scale-90 hover:transition-all`}
+            className={`${
+              data ? "hidden" : "flex"
+            } md:hidden items-center justify-center gap-1 mr-2 cursor-pointer hover:scale-90 hover:transition-all`}
             onClick={() => window.history.back()}
           >
             <img src={BackIcon} alt="" className="w-7" />

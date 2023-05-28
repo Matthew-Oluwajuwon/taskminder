@@ -1,4 +1,3 @@
-import React from "react"
 import { Route, Routes } from "react-router-dom"
 import AuthLayout from "./common/layout/auth"
 import { OTPVerification, SignIn, SignUp } from "./views/authentication"
@@ -7,6 +6,7 @@ import { getThemeConfig } from "./theme.config"
 import { PageLayout } from "./common/layout/page"
 import {
   CompletedTaskExpanded,
+  CreateNewTask,
   Dashboard,
   OngoingTaskExpanded,
   UpcomingTaskExpanded,
@@ -23,18 +23,10 @@ const App = () => {
         </Route>
         <Route path="/dashboard" element={<PageLayout />}>
           <Route index element={<Dashboard />} />
-          <Route
-            path="ongoing-task"
-            element={<OngoingTaskExpanded />}
-          />
-          <Route
-            path="completed-task"
-            element={<CompletedTaskExpanded />}
-          />
-          <Route
-            path="upcoming-task"
-            element={<UpcomingTaskExpanded />}
-          />
+          <Route path="ongoing-task" element={<OngoingTaskExpanded />} />
+          <Route path="completed-task" element={<CompletedTaskExpanded />} />
+          <Route path="upcoming-task" element={<UpcomingTaskExpanded />} />
+          <Route path="create-new-task" element={<CreateNewTask />} />
         </Route>
       </Routes>
     </ConfigProvider>

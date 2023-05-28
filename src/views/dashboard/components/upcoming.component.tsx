@@ -1,4 +1,5 @@
-import { Card, Progress } from "antd"
+/* eslint-disable prettier/prettier */
+import { Card } from "antd"
 import React from "react"
 import More from "../../../assets/icons/more.svg"
 import { motion } from "framer-motion"
@@ -6,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 
 export interface UpcomingProp {
   cardTitle: string
-  date: string;
+  date: string
   subTask: number
   percent: number
 }
@@ -17,31 +18,31 @@ export const UpcomingComponent: React.FC = () => {
       cardTitle: "Design rectification",
       date: "May 1 - May 10",
       subTask: 4,
-      percent: 100
+      percent: 100,
     },
     {
       cardTitle: "Express dashboard upgrade",
       date: "May 12 - May 17",
       subTask: 3,
-      percent: 100
+      percent: 100,
     },
     {
       cardTitle: "Workspace setup",
       date: "May 20 - May 28",
       subTask: 15,
-      percent: 100
+      percent: 100,
     },
     {
       cardTitle: "New app feature",
       date: "June 1 - June 10",
       subTask: 15,
-      percent: 100
+      percent: 100,
     },
     {
       cardTitle: "Blockchain task",
       date: "June 8 - June 15",
       subTask: 15,
-      percent: 100
+      percent: 100,
     },
   ]
 
@@ -85,7 +86,7 @@ export const UpcomingComponent: React.FC = () => {
           key={index}
         >
           <Card
-          key={index}
+            key={index}
             className="w-full border-none rounded-none mt-5 cursor-pointer"
             onClick={() =>
               navigate(
@@ -103,14 +104,13 @@ export const UpcomingComponent: React.FC = () => {
               <img src={More} alt="" />
             </div>
             <div className="flex justify-between items-center my-1 font-[Epilogue-500]">
-                <span className="font-[Epilogue-600]">{item.date}</span>
+              <span className="font-[Epilogue-600]">{item.date}</span>
               <p>
                 <span className="font-[Epilogue-600]">{item.subTask}</span>{" "}
                 sub-tasks
               </p>
             </div>
-            <div className="flex items-center justify-between">
-            </div>
+            <div className="flex items-center justify-between"></div>
           </Card>
         </motion.div>
       ))}

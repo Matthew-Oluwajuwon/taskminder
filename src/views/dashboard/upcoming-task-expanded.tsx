@@ -1,9 +1,9 @@
+/* eslint-disable prettier/prettier */
 import React, { useCallback, useLayoutEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import { OngoingProps } from "./components/ongoing.components"
 import BackIcon from "../../assets/icons/back.svg"
 import { motion } from "framer-motion"
-import { Button, Checkbox, Typography } from "antd"
+import { Button, Typography } from "antd"
 import { TaskFormModal } from "./components/task-form-modal"
 import { UpcomingProp } from "./components/upcoming.component"
 
@@ -37,7 +37,7 @@ export const UpcomingTaskExpanded: React.FC = () => {
     },
     [subTasks],
   )
-  
+
   const container = {
     hidden: { opacity: 1, scale: 0 },
     visible: {
@@ -140,12 +140,15 @@ export const UpcomingTaskExpanded: React.FC = () => {
           {state.date}
         </p>
       </div>
-      <motion.div variants={container}
+      <motion.div
+        variants={container}
         initial="hidden"
-        animate="visible" className="mt-5">
+        animate="visible"
+        className="mt-5"
+      >
         {subTasks.map((subsTask, index) => (
           <motion.div
-          variants={children}
+            variants={children}
             key={index}
             className="rounded-none border-none bg-[#ffffff] p-5 flex justify-between mb-5 items-center"
           >

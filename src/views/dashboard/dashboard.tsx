@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useLayoutEffect, useState } from "react"
 import Avatar from "../../assets/images/avatar.svg"
 import { Button, Drawer, Tabs } from "antd"
@@ -5,6 +6,7 @@ import { Ongoing } from "./components/ongoing.components"
 import { Pending } from "./components/pending.component"
 import { Completed } from "./components/completed.component"
 import { UpcomingComponent } from "./components/upcoming.component"
+import { useNavigate } from "react-router-dom"
 
 export const Dashboard: React.FC = () => {
   useLayoutEffect(() => {
@@ -109,6 +111,8 @@ export const Dashboard: React.FC = () => {
     label: items.name,
     children: items.item,
   }))
+  
+  const navigate = useNavigate();
 
   return (
     <>
@@ -140,7 +144,7 @@ export const Dashboard: React.FC = () => {
         placement="left"
         onClose={() => setOpenDrawer(false)}
       >
-        <div className="flex flex-col items-end relative w-full h-full lg:w-[50%] float-right">
+        <div className="flex flex-col items-start lg:items-end lg:float-right relative w-full h-full lg:w-[50%]">
           <div>
             <div className="flex items-center justify-start gap-3">
               <section>
@@ -157,11 +161,11 @@ export const Dashboard: React.FC = () => {
                 Personal Information
               </h1>
               <div className="text-[#5C5C5C] font-[Epilogue-400] text-[1rem]">
-                <h2 className="flex items-center justify-between">
+                <h2 className="grid lg:flex items-center justify-between">
                   Username:&nbsp;{" "}
                   <span className="text-[#000000]">matthewTheChef</span>
                 </h2>
-                <h2 className="flex items-center justify-between">
+                <h2 className="grid lg:flex items-center justify-between">
                   Email Address:&nbsp;{" "}
                   <span className="text-[#000000]">
                     matthewthechef@gmail.com
@@ -176,7 +180,7 @@ export const Dashboard: React.FC = () => {
                   Security
                 </h1>
                 <div className="text-[#5C5C5C] font-[Epilogue-400] text-[1rem]">
-                  <h2 className="flex items-center justify-between">
+                  <h2 className="grid lg:flex items-center justify-between">
                     Password:&nbsp;{" "}
                     <span className="text-[#E15341] cursor-pointer">
                       Change Password
@@ -238,6 +242,7 @@ export const Dashboard: React.FC = () => {
             <Button
               type="primary"
               className="bg-[#F7E8E6] absolute right-2 -top-14 md:top-2 text-primary-color flex items-center justify-center py-5 rounded-none px-5 font-[Epilogue-600] text-[1rem]"
+            onClick={() => navigate("/dashboard/create-new-task")}
             >
               Create new task
             </Button>

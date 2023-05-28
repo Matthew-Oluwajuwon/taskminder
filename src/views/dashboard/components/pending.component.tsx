@@ -1,8 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { Card, Progress } from "antd"
 import React from "react"
 import More from "../../../assets/icons/more.svg"
 import { motion } from "framer-motion"
-import { useNavigate } from "react-router-dom"
 
 export interface PendingProps {
   cardTitle: string
@@ -51,8 +51,6 @@ export const Pending: React.FC = () => {
     },
   ]
 
-  const navigate = useNavigate()
-
   const container = {
     hidden: { opacity: 1, scale: 0 },
     visible: {
@@ -90,10 +88,7 @@ export const Pending: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           key={index}
         >
-          <Card
-          key={index}
-            className="w-full border-none rounded-none mt-5"
-          >
+          <Card key={index} className="w-full border-none rounded-none mt-5">
             <div key={index} className="flex justify-between items-center">
               <h1 className="font-[Epilogue-500] text-[1rem] text-black">
                 {item.cardTitle}
@@ -113,7 +108,7 @@ export const Pending: React.FC = () => {
             <div className="flex items-center justify-between">
               <Progress
                 percent={item.percent}
-                size={["90%", 5]}
+                size={[500, 5]}
                 strokeColor={item.color}
                 showInfo={false}
               />

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useLayoutEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import BackIcon from "../../assets/icons/back.svg"

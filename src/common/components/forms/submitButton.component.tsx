@@ -1,8 +1,9 @@
+/* eslint-disable prettier/prettier */
 import { Button } from "antd"
 import React from "react"
 
 interface Props {
-    label: string;  
+  label: string
 }
 
 export const SubmitButton: React.FC<Props> = ({ label }) => {

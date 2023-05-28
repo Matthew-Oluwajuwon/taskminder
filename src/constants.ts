@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 export const AuthPageSideText = {
-    Signin: "Welcome Back 👋🏽",
-    Signup: "Get Started"
+  Signin: "Welcome Back 👋🏽",
+  Signup: "Get Started",
 }
 
 export const FORM_INPUT_TYPE = {
-    INPUT: "input",
-    PASSWORD: "password"
+  INPUT: "input",
+  PASSWORD: "password",
 }
