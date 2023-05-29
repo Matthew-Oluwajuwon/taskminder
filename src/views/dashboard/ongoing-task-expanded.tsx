@@ -6,6 +6,7 @@ import BackIcon from "../../assets/icons/back.svg"
 import { motion } from "framer-motion"
 import { Button, Checkbox, Typography } from "antd"
 import { TaskFormModal } from "./components/task-form-modal"
+import { AiOutlineDelete } from "react-icons/ai";
 
 export const OngoingTaskExpanded: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -159,10 +160,11 @@ export const OngoingTaskExpanded: React.FC = () => {
               <Checkbox />
               {subsTask}
             </span>
+            <AiOutlineDelete onClick={() => remove(index)} className="block md:hidden text-[1.3rem] text-[#ff0000]"/>
             <Button
               type="text"
               onClick={() => remove(index)}
-              className="text-[#FF3535] hover:bg-[#F7E8E6!important] rounded-none py-5 px-3 flex justify-center items-center hover:text-[#E15341!important] font-[Epilogue-500] text-[1rem]"
+              className="text-[#FF3535] hover:bg-[#F7E8E6!important] rounded-none py-5 px-3 hidden md:flex justify-center items-center hover:text-[#E15341!important] font-[Epilogue-500] text-[1rem]"
             >
               remove sub-task
             </Button>

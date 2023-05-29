@@ -10,6 +10,7 @@ import blue from "../../../assets/icons/blue-dot.svg"
 import pink from "../../../assets/icons/pink-dot.svg"
 import green from "../../../assets/icons/green-dot.svg"
 import colors from "../../../assets/icons/colors.svg"
+import { AiOutlineDelete } from "react-icons/ai"
 
 type RequiredMark = boolean | "optional"
 
@@ -112,13 +113,14 @@ export const CreateNewTask: React.FC = () => {
                   value={undefined}
                   rule={[{ required: false }]}
                   type={"text"}
+                  suffix={<AiOutlineDelete onClick={() => setSubTasks(subTasks.filter((x, i) => i !== index ))} className="text-[1.3rem] text-[#ff0000]" />}
                 />
               </Col>
             ))}
             <Col
               span={24}
               onClick={() => setSubTasks([...subTasks, 1])}
-              className="cursor-pointer -mt-5 mb-5 text-primary-color font-[Epilogue-600]"
+              className="cursor-pointer  mb-5 text-primary-color font-[Epilogue-600]"
             >
               Add sub-task
             </Col>

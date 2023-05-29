@@ -7,6 +7,7 @@ import { Pending } from "./components/pending.component"
 import { Completed } from "./components/completed.component"
 import { UpcomingComponent } from "./components/upcoming.component"
 import { useNavigate } from "react-router-dom"
+import { AiOutlineLogout } from "react-icons/ai"
 
 export const Dashboard: React.FC = () => {
   useLayoutEffect(() => {
@@ -145,15 +146,16 @@ export const Dashboard: React.FC = () => {
         onClose={() => setOpenDrawer(false)}
       >
         <div className="flex flex-col items-start lg:items-end lg:float-right relative w-full h-full lg:w-[50%]">
-          <div>
+          <div className="overflow-auto">
             <div className="flex items-center justify-start gap-3">
               <section>
                 <img src={Avatar} alt="" />
               </section>
-              <section>
+              <section className="flex items-center gap-10 justify-between">
                 <h1 className="text-primary-color font-[Epilogue-500] text-[0.9rem] md:text-[1.2rem] sm:-mt-5">
                   matthewTheChef
                 </h1>
+                <AiOutlineLogout className="text-[1.3rem] block lg:hidden text-[#ff0000]" />
               </section>
             </div>
             <div className="mt-10 leading-loose">
@@ -221,7 +223,7 @@ export const Dashboard: React.FC = () => {
           </div>
           <Button
             type="primary"
-            className="bg-[#F7E8E6] mb-5 mx-auto absolute bottom-0 left-1/2 -translate-x-1/2 text-primary-color flex items-center justify-center py-5 rounded-none px-5 font-[Epilogue-600] text-[1rem]"
+            className="bg-[#F7E8E6] mb-5 mx-auto absolute bottom-0 left-1/2 -translate-x-1/2 text-primary-color hidden lg:flex items-center justify-center py-5 rounded-none px-5 font-[Epilogue-600] text-[1rem]"
           >
             Logout
           </Button>

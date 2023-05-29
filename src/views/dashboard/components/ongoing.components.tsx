@@ -122,7 +122,7 @@ export const Ongoing: React.FC = () => {
             <div className="flex items-center justify-between">
               <Progress
                 percent={item.percent}
-                size={[500, 5]}
+                size={["90%" as any, 5]}
                 strokeColor={item.color}
                 showInfo={false}
               />
