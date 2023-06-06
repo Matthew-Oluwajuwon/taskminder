@@ -1,31 +1,27 @@
 /* eslint-disable prettier/prettier */
-import { Col, Form, FormProps, Row } from "antd"
+import { Col, Form, Row } from "antd"
 import { motion } from "framer-motion"
-import React, { useLayoutEffect, useState } from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { CustomInput } from "../../common/components/forms/Input.component"
 import { SubmitButton } from "../../common/components/forms/submitButton.component"
+import { formConfig } from "../../form-config"
+import { formMotion } from "../../utils/motion"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { setField } from "../../store"
 
 export const SignUp: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const state = useAppSelector((state) => {
+    return state.auth
+  })
   const [showPassword, setShowPassword] = useState(false)
-  useLayoutEffect(() => {
-    document.title = "Signup | TaskMinder"
-  }, [])
-  const formConfig: FormProps = {
-    layout: "vertical",
-    labelCol: { span: 24 },
-    wrapperCol: { span: 24 },
-  }
+
   return (
     <motion.div
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{
-        duration: 0.5,
-        delay: 0.4,
-        type: "tween",
-        stiffness: 200,
-      }}
+      variants={formMotion()}
+      initial="hidden"
+      animate="show"
       className="grid place-content-center h-[95%] mx-10 lg:mx-12"
     >
       <h1 className="text-primary-color font-[Epilogue-600] text-[2rem]">
@@ -41,15 +37,15 @@ export const SignUp: React.FC = () => {
         fields={[
           {
             name: "email",
-            value: undefined,
+            value: state.request?.email,
           },
           {
             name: "password",
-            value: undefined,
+            value: state.request?.password,
           },
           {
             name: "username",
-            value: undefined,
+            value: state.request?.username,
           },
         ]}
       >
@@ -59,7 +55,10 @@ export const SignUp: React.FC = () => {
               name="email"
               type="email"
               label="Enter Email Address"
-              value={undefined}
+              onChange={(e) =>
+                dispatch(setField({ key: "email", value: e.target.value }))
+              }
+              value={state.request?.email}
               rule={[
                 {
                   required: true,
@@ -76,7 +75,10 @@ export const SignUp: React.FC = () => {
               name="username"
               type="text"
               label="Create Username"
-              value={undefined}
+              onChange={(e) =>
+                dispatch(setField({ key: "username", value: e.target.value }))
+              }
+              value={state.request?.username}
               rule={[
                 {
                   required: true,
@@ -89,7 +91,10 @@ export const SignUp: React.FC = () => {
             <CustomInput
               label="Create Password"
               name="password"
-              value={undefined}
+              onChange={(e) =>
+                dispatch(setField({ key: "password", value: e.target.value }))
+              }
+              value={state.request?.password}
               rule={[{ required: true }]}
               type={showPassword ? "text" : "password"}
               suffix={

@@ -5,6 +5,7 @@ import React, { useLayoutEffect } from "react"
 import BackIcon from "../../assets/icons/back.svg"
 import PinInput from "react-pin-input"
 import { SubmitButton } from "../../common/components/forms/submitButton.component"
+import { formMotion } from "../../utils/motion"
 
 export const OTPVerification: React.FC = () => {
   useLayoutEffect(() => {
@@ -27,14 +28,9 @@ export const OTPVerification: React.FC = () => {
         </p>
       </div>
       <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{
-          duration: 0.5,
-          delay: 0.4,
-          type: "tween",
-          stiffness: 200,
-        }}
+        variants={formMotion()}
+        initial="hidden"
+        animate="show"
         className="grid place-content-center m-10 lg:m-12"
       >
         <h1 className="text-primary-color font-[Epilogue-600] text-[2rem] text-center lg:text-left">
@@ -50,6 +46,10 @@ export const OTPVerification: React.FC = () => {
           fields={[
             {
               name: "otp",
+              value: undefined,
+            },
+            {
+              name: "userId",
               value: undefined,
             },
           ]}

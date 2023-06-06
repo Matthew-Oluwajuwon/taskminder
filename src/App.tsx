@@ -11,22 +11,48 @@ import {
   OngoingTaskExpanded,
   UpcomingTaskExpanded,
 } from "./views/dashboard"
+import { ROUTE_NAMES } from "./constants"
+import { useAppSelector } from "./store/hooks"
 
 const App = () => {
+  const state = useAppSelector((state) => {
+    return state.theme
+  })
   return (
-    <ConfigProvider theme={getThemeConfig("")}>
+    <ConfigProvider theme={getThemeConfig(state)}>
       <Routes>
         <Route element={<AuthLayout />}>
           <Route index element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/otp-verification" element={<OTPVerification />} />
+          <Route
+            path={ROUTE_NAMES.AUTHENTICATION?.SIGN_UP}
+            element={<SignUp />}
+          />
+          <Route
+            path={ROUTE_NAMES.AUTHENTICATION?.OTP_VERIFICATION}
+            element={<OTPVerification />}
+          />
         </Route>
-        <Route path="/dashboard" element={<PageLayout />}>
+        <Route
+          path={ROUTE_NAMES.PROTECTED_ROUTES.DASHBOARD}
+          element={<PageLayout />}
+        >
           <Route index element={<Dashboard />} />
-          <Route path="ongoing-task" element={<OngoingTaskExpanded />} />
-          <Route path="completed-task" element={<CompletedTaskExpanded />} />
-          <Route path="upcoming-task" element={<UpcomingTaskExpanded />} />
-          <Route path="create-new-task" element={<CreateNewTask />} />
+          <Route
+            path={ROUTE_NAMES.PROTECTED_ROUTES.ONGOING_TASK}
+            element={<OngoingTaskExpanded />}
+          />
+          <Route
+            path={ROUTE_NAMES.PROTECTED_ROUTES.COMPLETED_TASK}
+            element={<CompletedTaskExpanded />}
+          />
+          <Route
+            path={ROUTE_NAMES.PROTECTED_ROUTES.UPCOMING_TASK}
+            element={<UpcomingTaskExpanded />}
+          />
+          <Route
+            path={ROUTE_NAMES.PROTECTED_ROUTES.CREATE_NEW_TASK}
+            element={<CreateNewTask />}
+          />
         </Route>
       </Routes>
     </ConfigProvider>

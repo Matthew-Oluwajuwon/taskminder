@@ -5,7 +5,7 @@ import { Rule } from "antd/es/form"
 
 interface Props {
   label: string
-  name: string
+  name: any
   value: any
   rule: Rule[]
   suffix?: React.ReactNode
@@ -34,6 +34,7 @@ export const CustomInput: React.FC<Props> = ({
       name={name}
       required
       rules={rule}
+      validateTrigger={['onChange', 'onBlur']}
     >
       <Input
         type={type}

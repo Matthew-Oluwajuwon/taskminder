@@ -1,32 +1,36 @@
 /* eslint-disable prettier/prettier */
 import React, { useCallback, useLayoutEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import { OngoingProps } from "./components/ongoing.components"
-import BackIcon from "../../assets/icons/back.svg"
+import BackIcon from "../../../assets/icons/back.svg"
 import { motion } from "framer-motion"
 import { Button, Checkbox, Typography } from "antd"
-import { TaskFormModal } from "./components/task-form-modal"
-import { AiOutlineDelete } from "react-icons/ai";
+import { TaskFormModal } from "./task-form-modal"
+import trash from "../../../assets/icons/trash.svg"
+import { listMotion, staggeredChildren, staggeredListMotion } from "../../../utils/motion"
+import { OngoingProps } from "../../../dummy"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { setGlobalState } from "../../../store"
 
 export const OngoingTaskExpanded: React.FC = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const [openSubTask, setOpenSubTask] = useState<boolean>(false)
-  const [deleteTask, setDeleteTask] = useState<boolean>(false)
   const [inputValue, setInputValue] = useState("")
   const [subTasks, setSubTasks] = useState<string[]>([])
   const [subTask, setSubTask] = useState<string>()
+  const dispatch = useAppDispatch();
+  const state = useAppSelector(state => {
+    return state.global
+  })
   const location = useLocation()
   useLayoutEffect(() => {
     document.title = "Ongoing Task | TaskMinder"
   }, [])
 
-  const state: OngoingProps = location.state
+  const stateLocation: OngoingProps = location.state
 
   const onFinish = useCallback(() => {
     setSubTasks([...subTasks, subTask as string])
-    setOpenSubTask(false)
+    dispatch(setGlobalState({key: "openSubTask", value: false}))
     setSubTask("")
-  }, [subTask, subTasks])
+  }, [dispatch, subTask, subTasks])
 
   const remove = useCallback(
     (id: number) => {
@@ -39,33 +43,12 @@ export const OngoingTaskExpanded: React.FC = () => {
     [subTasks],
   )
 
-  const container = {
-    hidden: { opacity: 1, scale: 0 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        delayChildren: 0.5,
-        staggerChildren: 0.5,
-        type: "spring",
-      },
-    },
-  }
-
-  const children = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-    },
-  }
-
   return (
     <div className="mt-10">
       <TaskFormModal
-        open={openSubTask}
+        open={state.openSubTask as boolean}
         value={subTask as string}
-        handleCancel={() => setOpenSubTask(false)}
+        handleCancel={() => dispatch(setGlobalState({key: "openSubTask", value: false}))}
         title="Add new sub-task"
         name="subTaskName"
         label="Sub-task Name"
@@ -74,9 +57,9 @@ export const OngoingTaskExpanded: React.FC = () => {
         onChange={(e: any) => setSubTask(e.target.value)}
       />
       <TaskFormModal
-        open={openModal}
-        value={state.cardTitle}
-        handleCancel={() => setOpenModal(false)}
+        open={state.openModal  as boolean}
+        value={stateLocation.cardTitle}
+        handleCancel={() => dispatch(setGlobalState({key: "openModal", value: false}))}
         title="Rename Task"
         name="taskName"
         label="Task Name"
@@ -84,36 +67,30 @@ export const OngoingTaskExpanded: React.FC = () => {
         onChange={() => {}}
       />
       <TaskFormModal
-        open={deleteTask}
+        open={state.deleteTask as boolean}
         value={inputValue}
-        handleCancel={() => setDeleteTask(false)}
+        handleCancel={() => dispatch(setGlobalState({key: "deleteTask", value: false}))}
         title="Delete Task"
         formDesc={
           <span>
             Are you sure you want to permanently delete this task? Copy task
             name and paste below{" "}
-            <b className="text-[#ff0000]">{state.cardTitle}</b>
+            <b className="text-[#ff0000]">{stateLocation.cardTitle}</b>
           </span>
         }
         name="deleteTaskName"
         label="Enter Task Name"
         btnName={"Delete task"}
         btnColor={true}
-        disabled={inputValue === state.cardTitle ? false : true}
+        disabled={inputValue === stateLocation.cardTitle ? false : true}
         onChange={(e: any) => setInputValue(e.target.value)}
       />
       <motion.div
         className="flex items-center gap-2 cursor-pointer"
         onClick={() => window.history.back()}
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 0.5,
-          type: "spring",
-          stiffness: 400,
-          damping: 10,
-        }}
-        whileHover={{ scale: 0.98 }}
+        variants={listMotion()}
+        initial="idden"
+        animate="show"
       >
         <img src={BackIcon} alt="" className="w-10" />
         <p className="text-primary-color text-[1.3rem] font-[Epilogue-500]">
@@ -122,45 +99,45 @@ export const OngoingTaskExpanded: React.FC = () => {
       </motion.div>
       <div className="flex justify-between items-center mt-10">
         <Typography.Paragraph
-          className="text-[1.3rem] font-[Epilogue-500]"
+          className="text-[1.3rem] font-[Epilogue-500] dark:text-[#CDCBCB]"
           ellipsis
         >
-          {state.cardTitle}
+          {stateLocation.cardTitle}
         </Typography.Paragraph>
         <Button
           type="text"
           className="text-primary-color hover:bg-[#F7E8E6!important] rounded-none py-5 px-3 flex justify-center items-center hover:text-[#E15341!important] -mt-5 font-[Epilogue-500] text-[1rem]"
-          onClick={() => setOpenModal(true)}
+          onClick={() => dispatch(setGlobalState({key: "openModal", value: true}))}
         >
           Rename
         </Button>
       </div>
       <div className="flex justify-between items-center">
-        <h1 className="text-[1.05rem] font-[Epilogue-500]">Sub-tasks</h1>
-        <span className="flex gap-1 items-center">
-          <span className={`font-semibold`} style={{ color: state.color }}>
-            {state.percent}%
+        <h1 className="text-[1.05rem] font-[Epilogue-500] dark:text-[#CDCBCB]">Sub-tasks</h1>
+        <span className="flex gap-1 items-center dark:text-[#CDCBCB]">
+          <span className={`font-semibold dark:text-[#CDCBCB]`} style={{ color: stateLocation.color }}>
+            {stateLocation.percent}%
           </span>
           done
         </span>
       </div>
       <motion.div
-        variants={container}
+        variants={staggeredListMotion()}
         initial="hidden"
         animate="visible"
         className="mt-5"
       >
         {subTasks.map((subsTask, index) => (
           <motion.div
-            variants={children}
+            variants={staggeredChildren}
             key={index}
-            className="rounded-none border-none bg-[#ffffff] p-5 flex justify-between mb-5 items-center"
+            className="rounded-none border-none bg-[#ffffff] dark:bg-[#0E0D0D] p-5 flex justify-between mb-5 items-center"
           >
-            <span className="flex items-center gap-3 text-[1rem] text-[#525252]">
+            <span className="flex items-center gap-3 text-[1rem] text-[#525252] dark:text-[#c4c4c4]">
               <Checkbox />
               {subsTask}
             </span>
-            <AiOutlineDelete onClick={() => remove(index)} className="block md:hidden text-[1.3rem] text-[#ff0000]"/>
+            <img src={trash} alt="" onClick={() => remove(index)} className="block md:hidden text-[1.3rem]"/>
             <Button
               type="text"
               onClick={() => remove(index)}
@@ -175,14 +152,14 @@ export const OngoingTaskExpanded: React.FC = () => {
         <Button
           type="primary"
           className="bg-[#F7E8E6] text-primary-color flex items-center justify-center py-5 rounded-none px-5 font-[Epilogue-600] text-[1rem]"
-          onClick={() => setDeleteTask(true)}
+          onClick={() => dispatch(setGlobalState({key: "deleteTask", value: true}))}
         >
           Delete task
         </Button>
         <Button
           type="primary"
           className="bg-primary-color text-[#ffffff] flex items-center justify-center py-5 rounded-none px-5 font-[Epilogue-600] text-[1rem]"
-          onClick={() => setOpenSubTask(true)}
+          onClick={() => dispatch(setGlobalState({key: "openSubTask", value: true}))}
         >
           Add new sub-task
         </Button>

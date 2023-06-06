@@ -1,49 +1,29 @@
 /* eslint-disable prettier/prettier */
-import { Col, Form, FormProps, Row } from "antd"
+import { Col, Form, Row } from "antd"
 import { motion } from "framer-motion"
-import React, { useCallback, useLayoutEffect, useState } from "react"
+import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { CustomInput } from "../../common/components/forms/Input.component"
 import { SubmitButton } from "../../common/components/forms/submitButton.component"
-
-interface Auth {
-  email: string
-  password: string
-}
+import { formConfig } from "../../form-config"
+import { formMotion } from "../../utils/motion"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { setField } from "../../store"
 
 export const SignIn: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(false)
-  const [auth, setAuth] = useState<Auth>({
-    email: "",
-    password: "",
+  const dispatch = useAppDispatch()
+  const state = useAppSelector((state) => {
+    return state.auth
   })
 
-  const setRequest = useCallback(
-    (value: any, key: keyof Auth) => {
-      setAuth({ ...auth, [key]: value })
-    },
-    [auth],
-  )
+  const [showPassword, setShowPassword] = useState(false)
 
-  useLayoutEffect(() => {
-    document.title = "Signin | TaskMinder"
-  }, [])
-  const formConfig: FormProps = {
-    layout: "vertical",
-    labelCol: { span: 24 },
-    wrapperCol: { span: 24 },
-  }
   const navigate = useNavigate()
   return (
     <motion.div
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{
-        duration: 0.5,
-        delay: 0.4,
-        type: "tween",
-        stiffness: 200,
-      }}
+      variants={formMotion()}
+      initial="hidden"
+      animate="show"
       className="grid place-content-center h-[95%] mx-10 lg:mx-12"
     >
       <h1 className="text-primary-color font-[Epilogue-600] text-[2rem]">
@@ -60,11 +40,11 @@ export const SignIn: React.FC = () => {
         fields={[
           {
             name: "email",
-            value: auth.email,
+            value: state.request?.email,
           },
           {
             name: "password",
-            value: auth.password,
+            value: state.request?.password,
           },
         ]}
       >
@@ -74,8 +54,10 @@ export const SignIn: React.FC = () => {
               name="email"
               type="email"
               label="Enter Email Address"
-              value={auth.email}
-              onChange={(e) => setRequest(e.target.value, "email")}
+              value={state.request?.email}
+              onChange={(e) =>
+                dispatch(setField({ key: "email", value: e.target.value }))
+              }
               rule={[
                 {
                   required: true,
@@ -91,10 +73,12 @@ export const SignIn: React.FC = () => {
             <CustomInput
               label="Enter Password"
               name="password"
-              value={auth.password}
+              value={state.request?.password}
               rule={[{ required: true }]}
               type={showPassword ? "text" : "password"}
-              onChange={(e) => setRequest(e.target.value, "password")}
+              onChange={(e) =>
+                dispatch(setField({ key: "password", value: e.target.value }))
+              }
               suffix={
                 <span
                   className="font-bold text-[#5C5C5C] font-[Epilogue-500] px-3 cursor-pointer hover:scale-95 hover:transition-all"

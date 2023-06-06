@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from "react"
-import { ModalComponent } from "../../../common/components/modal.component"
+import { ModalComponent } from "../../../common/components/modal/modal.component"
 import { Button, Col, Form, Row } from "antd"
 import { CustomInput } from "../../../common/components/forms/Input.component"
 
@@ -40,7 +40,7 @@ export const TaskFormModal: React.FC<Props> = ({
     <ModalComponent
       open={open}
       width={"30rem"}
-      title={<div className="font-[Epilogue-600] text-[1.2rem]">{title}</div>}
+      title={<div className="font-[Epilogue-600] dark:bg-[#0E0D0D] dark:text-[#ffffff] text-[1.2rem]">{title}</div>}
       footer={false}
       closable={false}
       handleCancel={handleCancel}

@@ -33,6 +33,7 @@ export const ModalComponent: React.FC<ModalProps> = ({
       onCancel={handleCancel}
       maskClosable={maskClosable}
       centered
+      className="dark:bg-[#0E0D0D!important]"
     >
       {children}
     </Modal>

@@ -2,12 +2,10 @@
 import React, { useLayoutEffect, useState } from "react"
 import Avatar from "../../assets/images/avatar.svg"
 import { Button, Drawer, Tabs } from "antd"
-import { Ongoing } from "./components/ongoing.components"
-import { Pending } from "./components/pending.component"
-import { Completed } from "./components/completed.component"
-import { UpcomingComponent } from "./components/upcoming.component"
 import { useNavigate } from "react-router-dom"
 import { AiOutlineLogout } from "react-icons/ai"
+import { ListCard } from "./components/List-card"
+import { ongoingItems, upcomingItems, completedItems, pendingItems } from "../../dummy"
 
 export const Dashboard: React.FC = () => {
   useLayoutEffect(() => {
@@ -28,8 +26,8 @@ export const Dashboard: React.FC = () => {
       name: (
         <div
           key={"1"}
-          className={`flex items-center gap-1 text-[#000000] ${
-            tabKey === "1" ? "text-[#000000]" : "text-[#A09F9F]"
+          className={`flex items-center gap-1 ${
+            tabKey === "1" ? "text-[#000000] dark:text-[#CDCBCB]" : "text-[#A09F9F]"
           } font-[Epilogue-500]`}
         >
           Ongoing{" "}
@@ -42,15 +40,21 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
       ),
-      item: <Ongoing />,
+      item: (
+        <ListCard
+          items={ongoingItems}
+          keys="1"
+          cardUrl={`/dashboard/ongoing-task?task=`}
+        />
+      ),
     },
     {
       key: "2",
       name: (
         <div
           key="2"
-          className={`flex items-center gap-1 text-[#000000] ${
-            tabKey === "2" ? "text-[#000000]" : "text-[#A09F9F]"
+          className={`flex items-center gap-1 ${
+            tabKey === "2" ? "text-[#000000] dark:text-[#CDCBCB]" : "text-[#A09F9F]"
           } font-[Epilogue-500]`}
         >
           Upcoming{" "}
@@ -63,15 +67,21 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
       ),
-      item: <UpcomingComponent />,
+      item: (
+        <ListCard
+          keys="2"
+          items={upcomingItems}
+          cardUrl={`/dashboard/upcoming-task?task=`}
+        />
+      ),
     },
     {
       key: "3",
       name: (
         <div
           key={"3"}
-          className={`flex items-center gap-1 text-[#000000] ${
-            tabKey === "3" ? "text-[#000000]" : "text-[#A09F9F]"
+          className={`flex items-center gap-1 ${
+            tabKey === "3" ? "text-[#000000] dark:text-[#CDCBCB]" : "text-[#A09F9F]"
           } font-[Epilogue-500]`}
         >
           Completed{" "}
@@ -84,15 +94,21 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
       ),
-      item: <Completed />,
+      item: (
+        <ListCard
+          keys="3"
+          items={completedItems}
+          cardUrl={`/dashboard/completed-task?task=`}
+        />
+      ),
     },
     {
       key: "4",
       name: (
         <div
           key={"4"}
-          className={`flex items-center gap-1 text-[#000000] ${
-            tabKey === "4" ? "text-[#000000]" : "text-[#A09F9F]"
+          className={`flex items-center gap-1 ${
+            tabKey === "4" ? "text-[#000000] dark:text-[#CDCBCB]" : "text-[#A09F9F]"
           } font-[Epilogue-500]`}
         >
           Pending{" "}
@@ -105,15 +121,20 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
       ),
-      item: <Pending />,
+      item: (
+        <ListCard
+          keys="4"
+          items={pendingItems}
+        />
+      ),
     },
   ].map((items) => ({
     key: items.key,
     label: items.name,
     children: items.item,
   }))
-  
-  const navigate = useNavigate();
+
+  const navigate = useNavigate()
 
   return (
     <>
@@ -134,7 +155,7 @@ export const Dashboard: React.FC = () => {
             </p>
           </section>
         </div>
-        <h1 className="text-[#303030] font-[Epilogue-500] text-[0.8rem] sm:text-[0.9rem] md:text-[1.2rem]">
+        <h1 className="text-[#303030] dark:text-[#CDCBCB] font-[Epilogue-500] text-[0.8rem] sm:text-[0.9rem] md:text-[1.2rem]">
           {date}
         </h1>
       </header>
@@ -230,7 +251,7 @@ export const Dashboard: React.FC = () => {
         </div>
       </Drawer>
       <main className="my-5">
-        <h1 className="text-[#000000] font-[Epilogue-500] text-[1.2rem]">
+        <h1 className="text-[#000000] dark:text-[#CDCBCB] font-[Epilogue-500] text-[1.2rem]">
           My tasks
         </h1>
         <div className="my-5">
@@ -244,7 +265,7 @@ export const Dashboard: React.FC = () => {
             <Button
               type="primary"
               className="bg-[#F7E8E6] absolute right-2 -top-14 md:top-2 text-primary-color flex items-center justify-center py-5 rounded-none px-5 font-[Epilogue-600] text-[1rem]"
-            onClick={() => navigate("/dashboard/create-new-task")}
+              onClick={() => navigate("/dashboard/create-new-task")}
             >
               Create new task
             </Button>

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useCallback, useLayoutEffect, useState } from "react"
+import React, { useLayoutEffect } from "react"
 import BackIcon from "../../../assets/icons/back.svg"
 import { motion } from "framer-motion"
 import { Button, Col, ColorPicker, DatePicker, Form, Row } from "antd"
@@ -10,56 +10,20 @@ import blue from "../../../assets/icons/blue-dot.svg"
 import pink from "../../../assets/icons/pink-dot.svg"
 import green from "../../../assets/icons/green-dot.svg"
 import colors from "../../../assets/icons/colors.svg"
-import { AiOutlineDelete } from "react-icons/ai"
-
-type RequiredMark = boolean | "optional"
-
-interface Data {
-    taskName: string,
-    subTasks: string[],
-    startDate: string,
-    endDate: string,
-    taskTheme: string
-}
+import trash from "../../../assets/icons/trash.svg"
+import { useAppSelector } from "../../../store/hooks"
+import { useSetRequest } from "../../../custom-hooks/useSetRequest"
 
 export const CreateNewTask: React.FC = () => {
-    const [subTasks, setSubTasks] = useState<number[]>([1])
-  const [requiredMark] = useState<RequiredMark>("optional")
-  const [data, setData] = useState<Data>({
-    taskName: "",
-    subTasks: [],
-    startDate: "",
-    endDate: "",
-    taskTheme: ""
+  const state = useAppSelector((state) => {
+    return state.global
   })
   useLayoutEffect(() => {
-      document.title = "Create New Task | TaskMinder"
-    }, [])
-    
-  const setRequest = useCallback(
-    (value: any, key: keyof Data) => {
-      setData({ ...data, [key]: value })
-    },
-    [data],
-  )
-  
-  const [form] = Form.useForm();
-  const [submittable, setSubmittable] = React.useState(false);
+    document.title = "Create New Task | TaskMinder"
+  }, [])
 
-  // Watch all values
-  const values = Form.useWatch([], form);
+  const { form, submittable, setRequest } = useSetRequest()
 
-  React.useEffect(() => {
-    form.validateFields().then(
-      () => {
-        setSubmittable(true);
-      },
-      () => {
-        setSubmittable(false);
-      }
-    );
-  }, [form, values]);
-  
   return (
     <div className="mt-10">
       <div className="flex items-center justify-between">
@@ -81,15 +45,15 @@ export const CreateNewTask: React.FC = () => {
             back
           </p>
         </motion.div>
-        <h1 className="font-[Epilogue-500] text-[1.2rem]">Create New Task</h1>
+        <h1 className="font-[Epilogue-500] text-[1.2rem] dark:text-[#ffffff]">Create New Task</h1>
       </div>
       <div className="mt-5 h-full">
         <Form
-        form={form}
+          form={form}
           layout="vertical"
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
-          requiredMark={requiredMark}
+          requiredMark={state?.requiredMark}
           className="w-full lg:w-[60%]"
         >
           <Row gutter={16}>
@@ -99,31 +63,66 @@ export const CreateNewTask: React.FC = () => {
                 name={"taskTitle"}
                 placeholder="e.g. House cleaning"
                 value={undefined}
-                rule={[{ required: true }]}
+                rule={[{
+                  validator: async (_, taskTitle) => {
+                    if (!taskTitle || taskTitle.length < 2) {
+                      return Promise.reject(new Error('Task title required'));
+                    }
+                  },
+                }]}
                 type={"text"}
-                onChange={(e) => setRequest(e.target.value, "taskName")}
+                onChange={(e) => setRequest(e.target.value, "taskTitle")}
               />
             </Col>
-            {subTasks.map((_subTask, index) => (
-              <Col span={24} key={index}>
-                <CustomInput
-                  label={"Sub Tasks"}
-                  name={"subTasks"}
-                  placeholder="e.g. Do launddry"
-                  value={undefined}
-                  rule={[{ required: false }]}
-                  type={"text"}
-                  suffix={<AiOutlineDelete onClick={() => setSubTasks(subTasks.filter((x, i) => i !== index ))} className="text-[1.3rem] text-[#ff0000]" />}
-                />
-              </Col>
-            ))}
-            <Col
-              span={24}
-              onClick={() => setSubTasks([...subTasks, 1])}
-              className="cursor-pointer  mb-5 text-primary-color font-[Epilogue-600]"
-            >
-              Add sub-task
-            </Col>
+            <Form.List name="subTasks" rules={[
+          {
+            validator: async (_, subTasks) => {
+              if (!subTasks || subTasks.length < 2) {
+                return Promise.reject(new Error('At least 1 sub-task'));
+              }
+            },
+          },
+        ]}>
+              {(fields, { add, remove }) => (
+                <>
+                  <Col span={24}>
+                    {fields.map(({ key, name }, index) => (
+                      <CustomInput
+                      {...fields}
+                      key={key}
+                        placeholder="e.g. Do launddry"
+                        label={index === 0 ? 'Sub Tasks' : ''}
+                        name={"subTask"}
+                        value={undefined}
+                        onChange={(e) => setRequest(e.target.value, "subTasks")}
+                        rule={[
+                          { required: true, message: "sub task required", whitespace: true },
+                        ]}
+                        suffix={fields.length > 1 ? (
+                          <img
+                            src={trash}
+                            alt=""
+                            onClick={() => remove(name)}
+                          />
+                        ) : null}
+                        type="text"
+                      />
+                    ))}
+                  </Col>
+                  <Col span={24}>
+                    <Form.Item>
+                      <Button
+                        type="text"
+                        className="text-primary-color font-[Epilogue-600] hover:bg-[#F7E8E6!important] hover:text-[#E15341!important]"
+                        onClick={() => add()}
+                      >
+                        Add sub task
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </>
+              )}
+            </Form.List>
             <Col span={12}>
               <Form.Item
                 label={
@@ -173,10 +172,30 @@ export const CreateNewTask: React.FC = () => {
                 rules={[{ required: false }]}
               >
                 <div className="flex items-center gap-2">
-                  <img src={red} className="cursor-pointer" onChange={(e) => setRequest(e, "taskTheme")} alt="" />
-                  <img src={green} className="cursor-pointer" onChange={(e) => setRequest(e, "taskTheme")} alt="" />
-                  <img src={blue} className="cursor-pointer" onChange={(e) => setRequest(e, "taskTheme")} alt="" />
-                  <img src={pink} className="cursor-pointer" onChange={(e) => setRequest(e, "taskTheme")} alt="" />
+                  <img
+                    src={red}
+                    className="cursor-pointer"
+                    onChange={(e) => setRequest(e, "taskTheme")}
+                    alt=""
+                  />
+                  <img
+                    src={green}
+                    className="cursor-pointer"
+                    onChange={(e) => setRequest(e, "taskTheme")}
+                    alt=""
+                  />
+                  <img
+                    src={blue}
+                    className="cursor-pointer"
+                    onChange={(e) => setRequest(e, "taskTheme")}
+                    alt=""
+                  />
+                  <img
+                    src={pink}
+                    className="cursor-pointer"
+                    onChange={(e) => setRequest(e, "taskTheme")}
+                    alt=""
+                  />
                   <ColorPicker
                     children={<img src={colors} alt="" />}
                     onChange={(e) => setRequest(e, "taskTheme")}

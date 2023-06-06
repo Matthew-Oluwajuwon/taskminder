@@ -1,15 +1,26 @@
 /* eslint-disable prettier/prettier */
-import React from "react"
+import React, { useLayoutEffect } from "react"
 import { Outlet, useLocation } from "react-router-dom"
 import Logo from "../../assets/images/logo.svg"
 import Favi from "../../assets/icons/favicon.svg"
-import { AuthPageSideText } from "../../constants"
+import { AuthPageSideText, ROUTE_NAMES } from "../../constants"
 import Typewriter from "typewriter-effect"
 import BackIcon from "../../assets/icons/back.svg"
 
 const AuthLayout: React.FC = () => {
   const location = useLocation()
   const data = location.pathname === "/"
+
+  useLayoutEffect(() => {
+    document.title =
+      location.pathname === ROUTE_NAMES.AUTHENTICATION?.SIGN_IN
+        ? "Sign in | TaskMinder"
+        : location.pathname === ROUTE_NAMES.AUTHENTICATION?.SIGN_UP
+        ? "Sign Up | TaskMinder"
+        : location.pathname === ROUTE_NAMES.AUTHENTICATION?.OTP_VERIFICATION
+        ? "OTP Verification | TaskMinder"
+        : ""
+  }, [location.pathname])
 
   return (
     <div className="h-[100svh] grid grid-cols-1 lg:grid-cols-2">

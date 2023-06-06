@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import React, { useLayoutEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import BackIcon from "../../assets/icons/back.svg"
+import BackIcon from "../../../assets/icons/back.svg"
 import { motion } from "framer-motion"
 import { Button, Typography } from "antd"
-import { TaskFormModal } from "./components/task-form-modal"
-import { CompletedProp } from "./components/completed.component"
-import checked from "../../assets/icons/checked.svg"
+import { TaskFormModal } from "./task-form-modal"
+import checked from "../../../assets/icons/checked.svg"
+import { listMotion, staggeredChildren, staggeredListMotion } from "../../../utils/motion"
+import { CompletedProp } from "../../../dummy"
 
 export const CompletedTaskExpanded: React.FC = () => {
   const [deleteTask, setDeleteTask] = useState<boolean>(false)
@@ -24,26 +25,6 @@ export const CompletedTaskExpanded: React.FC = () => {
   }, [])
 
   const state: CompletedProp = location.state
-  const container = {
-    hidden: { opacity: 1, scale: 0 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        delayChildren: 0.5,
-        staggerChildren: 0.5,
-        type: "spring",
-      },
-    },
-  }
-
-  const children = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-    },
-  }
 
   return (
     <div className="mt-10">
@@ -69,15 +50,9 @@ export const CompletedTaskExpanded: React.FC = () => {
       <motion.div
         className="flex items-center gap-2 cursor-pointer"
         onClick={() => window.history.back()}
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 0.5,
-          type: "spring",
-          stiffness: 400,
-          damping: 10,
-        }}
-        whileHover={{ scale: 0.98 }}
+        variants={listMotion()}
+        initial="hidden"
+        animate="show"
       >
         <img src={BackIcon} alt="" className="w-10" />
         <p className="text-primary-color text-[1.3rem] font-[Epilogue-500]">
@@ -99,14 +74,14 @@ export const CompletedTaskExpanded: React.FC = () => {
         <h1 className="text-[1.05rem] font-[Epilogue-500]">Sub-tasks</h1>
       </div>
       <motion.div
-        variants={container}
+        variants={staggeredListMotion()}
         initial="hidden"
         animate="visible"
         className="mt-5"
       >
         {subTasks.map((subsTask, index) => (
           <motion.div
-            variants={children}
+            variants={staggeredChildren}
             key={index}
             className="rounded-none border-none bg-[#ffffff] p-5 flex justify-between mb-5 items-center"
           >
