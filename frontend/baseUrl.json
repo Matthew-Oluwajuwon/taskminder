@@ -1,0 +1,8 @@
+<<<<<<< HEAD
+{
+    "local": "http://localhost:9000/api/v1/"
+=======
+{
+    "local": "http://localhost:9000/api/v1/"
+>>>>>>> f5caa89ee2da2e1f70c3298f1c68c44c2323ae77
+}
