@@ -236,21 +236,21 @@ export const Dashboard: React.FC = () => {
                 Personal Information
               </h1>
               <div className="text-[#5C5C5C] dark:text-[#ffffff] font-[Epilogue-400] text-[0.8rem]">
-                <h2 className="grid lg:flex items-center justify-between">
-                  Username:&nbsp;{" "}
-                  <span className="text-[#000000] dark:text-[#ffffff]">
-                    {userInfo.username}
-                  </span>
-                </h2>
-                <h2 className="grid lg:flex items-center justify-between">
-                  Email Address:&nbsp;{" "}
-                  <span className="text-[#000000] dark:text-[#ffffff]">
-                    {userInfo.email}
-                  </span>
-                </h2>
-                <p className="text-primary-color w-fit cursor-pointer text-[0.8rem] font-[Epilogue-400]">
+                  <h2 className="grid lg:flex items-center justify-between">
+                    Username:&nbsp;{" "}
+                    <span className="text-[#000000] dark:text-[#ffffff]">
+                      {userInfo.username}
+                    </span>
+                  </h2>
+                  <h2 className="grid lg:flex items-center justify-between">
+                    Email Address:&nbsp;{" "}
+                    <span className="text-[#000000] dark:text-[#ffffff]">
+                      {userInfo.email}
+                    </span>
+                  </h2>
+                <button className="text-primary-color w-fit cursor-pointer text-[0.8rem] font-[Epilogue-400]">
                   Edit
-                </p>
+                </button>
               </div>
               <div className="mt-10 leading-loose">
                 <h1 className="font-[Epilogue-500] text-[#000000] dark:text-[#ffffff] text-[1.1rem] mb-1">
