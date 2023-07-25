@@ -1,17 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { useCallback, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import {
-  setAllGlobalState,
-  setField,
-  useUploadProfileImageMutation,
-} from "../store"
+import { setAllGlobalState, setField } from "../store"
 import { Form, UploadProps } from "antd"
 import Notify from "../common/components/notification/notify"
 import { FORM_METHODS, NOTIFICATION_TYPE } from "../utils/constants"
 import { TypeOptions } from "react-toastify"
 import { RcFile } from "antd/es/upload"
-import useAuthentication from "./useAuthentication"
 import React from "react"
 
 export const useSetRequest = () => {
@@ -20,7 +15,7 @@ export const useSetRequest = () => {
   const { global, auth } = useAppSelector((state) => {
     return state
   })
-  const values = Form.useWatch([], form);
+  const values = Form.useWatch([], form)
   const [submittable, setSubmittable] = React.useState(false)
 
   useEffect(() => {
@@ -50,11 +45,6 @@ export const useSetRequest = () => {
   )
 
   const [loading, setLoading] = useState(false)
-
-  const [uploadProfileImage, { data, isLoading, isError, error }] =
-    useUploadProfileImageMutation()
-
-  useAuthentication(data, isLoading, error, isError)
 
   const formData = new FormData()
   const prop: UploadProps = {
@@ -90,7 +80,6 @@ export const useSetRequest = () => {
     onChange: (info) => {
       if (auth.request.profileImage !== null) {
         info.file.status = "done"
-        uploadProfileImage(auth)
       }
     },
   }

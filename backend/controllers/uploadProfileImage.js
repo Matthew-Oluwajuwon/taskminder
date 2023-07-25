@@ -24,7 +24,8 @@ const uploadProfileImage = async (request, response) => {
         data: null,
       });
 
-    const user = await Users.findOne({ email: request.user.email });
+      const user = await Users.findOne({ _id: request.user?._id });
+      
     if (!user) {
       return response.status(400).send({
         responseCode: ResponsCode.BAD_REQUEST,

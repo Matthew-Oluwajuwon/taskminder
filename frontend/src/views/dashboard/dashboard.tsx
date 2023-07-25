@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useLayoutEffect, useState } from "react"
+import React, { useLayoutEffect, useMemo, useState } from "react"
 import Avatar from "../../assets/icons/gravitar.svg"
 import { Button, Drawer, Tabs, Upload } from "antd"
 import { useNavigate } from "react-router-dom"
@@ -15,13 +15,18 @@ import ThemeSwitcher from "../../common/components/theme-switcher/themeSwitcher"
 import useUserInfo from "../../custom-hooks/useUserInfo"
 import { BsCalendar } from "react-icons/bs"
 import { useSetRequest } from "../../custom-hooks/useSetRequest"
+import { useUploadProfileImageMutation } from "../../store"
+import useAuthentication from "../../custom-hooks/useAuthentication"
+import { useAppSelector } from "../../store/hooks"
 
 export const Dashboard: React.FC = () => {
   useLayoutEffect(() => {
     document.title = "Dashboard | TaskMinder"
   }, [])
   const { userInfo } = useUserInfo()
-
+  const { auth } = useAppSelector((state) => {
+    return state
+  })
   const date = new Date().toUTCString().slice(5, 16)
   const [tabKey, setTabKey] = useState<string>("1")
   const [openDrawer, setOpenDrawer] = useState<boolean>(false)
@@ -147,8 +152,19 @@ export const Dashboard: React.FC = () => {
     children: items.item,
   }))
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { loading, prop } = useSetRequest()
+
+  const [uploadProfile, { data, isError, isLoading, error }] =
+    useUploadProfileImageMutation()
+  useAuthentication(data, isLoading, error, isError);
+  
+  useMemo(() => {
+    if (auth.request?.profileImage) {
+      uploadProfile(auth)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth])
 
   return (
     <>

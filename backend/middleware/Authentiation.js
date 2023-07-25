@@ -17,10 +17,11 @@ const auth = (request, response, next) => {
       responseMessage: "Unauthorized",
       data: null,
     });
-
   try {
     const payload = jwt.verify(token, process.env.SECRET_KEY);
+
     request.user = payload;
+
     next();
   } catch (error) {
     response.status(400).send({
