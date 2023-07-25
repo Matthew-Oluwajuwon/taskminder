@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import React, { useLayoutEffect, useMemo, useState } from "react"
+import React, { useEffect, useLayoutEffect, useState } from "react"
 import Avatar from "../../assets/icons/gravitar.svg"
-import { Button, Drawer, Tabs, Upload } from "antd"
+import { Button, Drawer, Image, Tabs, Upload } from "antd"
 import { useNavigate } from "react-router-dom"
 import { ListCard } from "./components/List-card"
 import {
@@ -157,14 +157,14 @@ export const Dashboard: React.FC = () => {
 
   const [uploadProfile, { data, isError, isLoading, error }] =
     useUploadProfileImageMutation()
-  useAuthentication(data, isLoading, error, isError);
-  
-  useMemo(() => {
+  useAuthentication(data, isLoading, error, isError)
+
+  useEffect(() => {
     if (auth.request?.profileImage) {
       uploadProfile(auth)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uploadProfile, auth.request.profileImage])
 
   return (
     <>
@@ -177,7 +177,7 @@ export const Dashboard: React.FC = () => {
             <img
               src={userInfo.profileImage ? userInfo.profileImage : Avatar}
               alt=""
-              className="w-20 h-20 rounded-full hover:scale-110 hover:transition-all"
+              className="w-20 h-20 rounded-full hover:scale-110 hover:transition-all object-contain"
             />
           </section>
           <section>
@@ -204,10 +204,17 @@ export const Dashboard: React.FC = () => {
           <div className="overflow-auto w-full">
             <div className="flex items-center justify-between">
               <section className="flex items-center gap-3">
-                <img
-                  src={userInfo.profileImage ? userInfo.profileImage : Avatar}
+                <Image
+                  src={
+                    userInfo?.profileImage
+                      ? userInfo?.profileImage
+                      : auth.request?.profileImage
+                      ? auth.request?.profileImage
+                      : Avatar
+                  }
                   alt=""
-                  className="w-20 h-20 rounded-full"
+                  className="w-[5rem!important] h-20 rounded-full object-contain"
+                  preview
                 />
                 <h1 className="text-primary-color font-[Epilogue-500] text-[0.9rem] md:text-[1.2rem]">
                   {userInfo.username}

@@ -9,19 +9,19 @@ const useUserInfo = () => {
   const [userInfo, setUserInfo] = useState<Apiresponse.AuthInfo>(
     new Apiresponse.AuthInfo(),
   )
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const storage = sessionStorage.getItem("*****")
 
   useEffect(() => {
-    if (sessionStorage.getItem("*****")) {
+    if (storage) {
       const response: Apiresponse.AuthInfo = JSON.parse(
-        Encryption.decrypt(sessionStorage.getItem("*****") as string)
+        Encryption.decrypt(storage as string)
       )
       setUserInfo(response)
     } else {
       navigate(ROUTE_NAMES.AUTHENTICATION.SIGN_IN)
     }
-  }, [navigate])
-
+  }, [navigate, storage])  
 
   return { userInfo }
 }
