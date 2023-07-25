@@ -24,7 +24,7 @@ const otpVerification = async (request, response) => {
 
       response.status(200).send({
         responseCode: ResponsCode.SUCCESSFUL,
-        responseMessage: "Email verification successful",
+        responseMessage: "Email verification successful, login to continue",
         data: {
           _id: user._id,
           email: user.email,

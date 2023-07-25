@@ -9,11 +9,11 @@ import {
 } from "../utils/constants"
 import { TypeOptions } from "react-toastify"
 import { useNavigate } from "react-router-dom"
-import { Encryption } from "../common/components/encryption/encryption"
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/react"
 import { SerializedError } from "@reduxjs/toolkit"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { setAllGlobalState } from "../store"
+import { Encryption } from "../common/components/encryption/encryption"
 
 const useAuthentication = (
   data: any,
@@ -34,24 +34,28 @@ const useAuthentication = (
         NOTIFICATION_TYPE.SUCCESS as TypeOptions,
         response?.responseMessage as string,
       )
-      sessionStorage.setItem("*****", Encryption.encrypt(response.data))
-      if (response.data?.token) {
-        sessionStorage.setItem("***", response.data?.token)
-      }
       dispatch(
         setAllGlobalState({
           ...state,
           userInfo: response.data,
         }),
-      )
-      navigate(
-        initializer === INITIALIZER_TYPE.SIGNUP || !response.data?.isVerified
-          ? ROUTE_NAMES.AUTHENTICATION.OTP_VERIFICATION
-          : ROUTE_NAMES.PROTECTED_ROUTES.DASHBOARD,
-        {
-          replace: true,
-        },
-      )
+        )
+        
+        sessionStorage.setItem("*****", Encryption.encrypt(response.data))
+        if (response.data?.token) {
+          sessionStorage.setItem("***", response.data?.token)
+        }
+      
+      setTimeout(() => {
+        navigate(
+          initializer === INITIALIZER_TYPE.SIGNUP || !response.data?.isVerified
+            ? ROUTE_NAMES.AUTHENTICATION.OTP_VERIFICATION
+            :  ROUTE_NAMES.PROTECTED_ROUTES.DASHBOARD,
+          {
+            replace: true,
+          },
+        )
+      }, 1000);
     } else if (isError) {
       if ("data" in error!) {
         const err: Apiresponse.API = error?.data as Apiresponse.API
@@ -62,7 +66,7 @@ const useAuthentication = (
         )
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, dispatch, error, initializer, isError, isLoading, navigate])
 
   useEffect(() => {

@@ -44,7 +44,7 @@ const signUp = async (request, response) => {
       email,
       username,
       password,
-      otp: Math.floor(Math.random() * 1000000),
+      otp: Math.floor(Math.random() * 900000) + 100000,
     });
 
     // password hashing using bcrypt

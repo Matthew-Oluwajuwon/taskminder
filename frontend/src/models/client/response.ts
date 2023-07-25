@@ -13,5 +13,6 @@ export namespace Apiresponse {
     isVerified?: boolean
     dateCreated?: string
     profileImage?: string
+    token?: string
   }
 }

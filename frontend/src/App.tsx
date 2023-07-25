@@ -23,14 +23,6 @@ const App = () => {
     return state
   })
 
-  const isLoggedIn = () => {
-    if (sessionStorage.getItem("***")) {
-      return true
-    } else {
-      return false
-    }
-  }  
-
   return (
     <ConfigProvider theme={getThemeConfig(theme)}>
       <Routes>
@@ -44,7 +36,12 @@ const App = () => {
             path={ROUTE_NAMES.AUTHENTICATION.OTP_VERIFICATION}
             element={
               <ProtectedRoute
-                isLoggedIn={global.userInfo?.isVerified as boolean && sessionStorage.getItem("***") ? false : true}
+                isLoggedIn={
+                  (!global.userInfo?.isVerified as boolean) &&
+                  !sessionStorage.getItem("***")
+                    ? true
+                    : false
+                }
               >
                 <OTPVerification />
               </ProtectedRoute>
@@ -54,7 +51,7 @@ const App = () => {
         <Route
           path={ROUTE_NAMES.PROTECTED_ROUTES.DASHBOARD}
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn()}>
+            <ProtectedRoute isLoggedIn={sessionStorage.getItem("***") ? true : false}>
               <PageLayout />
             </ProtectedRoute>
           }
