@@ -19,8 +19,8 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 const App = () => {
-  const state = useAppSelector((state) => {
-    return state.theme
+  const { theme, global } = useAppSelector((state) => {
+    return state
   })
 
   const isLoggedIn = () => {
@@ -29,10 +29,10 @@ const App = () => {
     } else {
       return false
     }
-  }
+  }  
 
   return (
-    <ConfigProvider theme={getThemeConfig(state)}>
+    <ConfigProvider theme={getThemeConfig(theme)}>
       <Routes>
         <Route element={<AuthLayout />}>
           <Route index element={<SignIn />} />
@@ -44,7 +44,7 @@ const App = () => {
             path={ROUTE_NAMES.AUTHENTICATION.OTP_VERIFICATION}
             element={
               <ProtectedRoute
-                isLoggedIn={sessionStorage.getItem("*****") ? true : false}
+                isLoggedIn={global.userInfo?.isVerified as boolean && sessionStorage.getItem("***") ? false : true}
               >
                 <OTPVerification />
               </ProtectedRoute>

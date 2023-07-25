@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom"
 import { Encryption } from "../common/components/encryption/encryption"
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/react"
 import { SerializedError } from "@reduxjs/toolkit"
+import { useAppDispatch, useAppSelector } from "../store/hooks"
+import { setAllGlobalState } from "../store"
 
 const useAuthentication = (
   data: any,
@@ -21,6 +23,10 @@ const useAuthentication = (
   initializer?: string,
 ) => {
   const navigate = useNavigate()
+  const state = useAppSelector((state) => {
+    return state.global
+  })
+  const dispatch = useAppDispatch()
   const authenticate = useCallback(() => {
     const response: Apiresponse.API = data
     if (data && !isLoading) {
@@ -32,6 +38,12 @@ const useAuthentication = (
       if (response.data?.token) {
         sessionStorage.setItem("***", response.data?.token)
       }
+      dispatch(
+        setAllGlobalState({
+          ...state,
+          userInfo: response.data,
+        }),
+      )
       navigate(
         initializer === INITIALIZER_TYPE.SIGNUP || !response.data?.isVerified
           ? ROUTE_NAMES.AUTHENTICATION.OTP_VERIFICATION
@@ -50,7 +62,8 @@ const useAuthentication = (
         )
       }
     }
-  }, [data, error, initializer, isError, isLoading, navigate])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, dispatch, error, initializer, isError, isLoading, navigate])
 
   useEffect(() => {
     authenticate()
