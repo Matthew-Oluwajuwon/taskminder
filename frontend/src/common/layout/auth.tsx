@@ -1,17 +1,22 @@
 /* eslint-disable prettier/prettier */
 import React, { useLayoutEffect } from "react"
-import { Outlet, useLocation } from "react-router-dom"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import Logo from "../../assets/images/logo.svg"
 import Favi from "../../assets/icons/favicon.svg"
 import { AuthPageSideText, ROUTE_NAMES } from "../../utils/constants"
 import Typewriter from "typewriter-effect"
 import BackIcon from "../../assets/icons/back.svg"
+import {useAppSelector} from "../../store/hooks"
 
 const AuthLayout: React.FC = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const data = location.pathname === "/"
-
+  const {global} = useAppSelector((state)=>{return state})
   useLayoutEffect(() => {
+    if(sessionStorage.getItem("***") && !global.isChangingPassword){
+    return navigate(ROUTE_NAMES.PROTECTED_ROUTES.DASHBOARD, {replace:true})
+    }
     document.title =
       location.pathname === ROUTE_NAMES.AUTHENTICATION?.SIGN_IN
         ? "Sign in | TaskMinder"
@@ -20,7 +25,7 @@ const AuthLayout: React.FC = () => {
         : location.pathname === ROUTE_NAMES.AUTHENTICATION?.OTP_VERIFICATION
         ? "OTP Verification | TaskMinder"
         : ""
-  }, [location.pathname])
+  }, [global.isChangingPassword, location.pathname, navigate])
 
   return (
     <div className="h-[100svh] grid grid-cols-1 lg:grid-cols-2">

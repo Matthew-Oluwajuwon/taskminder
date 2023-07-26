@@ -19,6 +19,7 @@ export namespace State {
     createNewTask?: ApiRequest.CreateNewTask
     userInfo?: Apiresponse.AuthInfo
     action?: "CREATE" | "UPDATE" | "DELETE"
+    isChangingPassword?: boolean
   }
 
   export interface Auth {
