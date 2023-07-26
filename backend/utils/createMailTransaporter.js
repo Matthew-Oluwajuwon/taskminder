@@ -6,6 +6,9 @@ const createMailTransorter = () => {
         auth: {
             user: "matthewoluwajuwon056@outlook.com",
             pass: process.env.MAIL_PASSWORD
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     })
     
