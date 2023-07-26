@@ -18,6 +18,7 @@ export namespace State {
     subTaskInput?: Array<number>
     createNewTask?: ApiRequest.CreateNewTask
     userInfo?: Apiresponse.AuthInfo
+    action?: "CREATE" | "UPDATE" | "DELETE"
   }
 
   export interface Auth {
