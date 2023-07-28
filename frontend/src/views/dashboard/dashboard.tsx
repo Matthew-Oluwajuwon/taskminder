@@ -242,31 +242,12 @@ export const Dashboard: React.FC = () => {
               </Button>
             </Upload>
             <div className="mt-10 leading-loose text-[#000000] dark:text-[#ffffff]">
-              <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
-                Personal Information
-              </h1>
-              <div className="text-[#5C5C5C] dark:text-[#ffffff] font-[Epilogue-400] text-[0.8rem]">
-                  <h2 className="grid lg:flex items-center justify-between">
-                    Username:&nbsp;{" "}
-                    <span className="text-[#000000] dark:text-[#ffffff]">
-                      {userInfo.username}
-                    </span>
-                  </h2>
-                  <h2 className="grid lg:flex items-center justify-between">
-                    Email Address:&nbsp;{" "}
-                    <span className="text-[#000000] dark:text-[#ffffff]">
-                      {userInfo.email}
-                    </span>
-                  </h2>
-                  {/* toggler button to show or hide edit section */}
-                <button className="text-primary-color w-fit cursor-pointer text-[0.8rem] 
-                font-[Epilogue-400]" onClick={()=>{setIsEditingProfile(!isEditingProfile)}}>
-                  Edit
-                </button>
-              </div>
-              {/* check if isEditingProfile === true before rendering the edit profile section */}
-              {isEditingProfile && (
-              <motion.div className=" mt-4"  variants={formMotion()}
+          
+              {/* check if isEditingProfile === true before rendering the edit profile section and render just personal information if it is false */}
+              {isEditingProfile ? (
+             <> <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
+               Edit Personal Information
+              </h1> <motion.div className=" mt-4"  variants={formMotion()}
                 initial="hidden"
                 animate="show">
                 <div className="flex gap-2">
@@ -320,7 +301,30 @@ export const Dashboard: React.FC = () => {
               Save
               </Button>
               </div>
-              </motion.div>)}
+              </motion.div></>) : (<>
+                  <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
+                Personal Information
+              </h1>
+              <div className="text-[#5C5C5C] dark:text-[#ffffff] font-[Epilogue-400] text-[0.8rem]">
+                  <h2 className="grid lg:flex items-center justify-between">
+                    Username:&nbsp;{" "}
+                    <span className="text-[#000000] dark:text-[#ffffff]">
+                      {userInfo.username}
+                    </span>
+                  </h2>
+                  <h2 className="grid lg:flex items-center justify-between">
+                    Email Address:&nbsp;{" "}
+                    <span className="text-[#000000] dark:text-[#ffffff]">
+                      {userInfo.email}
+                    </span>
+                  </h2>
+                  {/* toggler button to show or hide edit section */}
+                <button className="text-primary-color w-fit cursor-pointer text-[0.8rem] 
+                font-[Epilogue-400]" onClick={()=>{setIsEditingProfile(!isEditingProfile)}}>
+                  Edit
+                </button>
+              </div>
+              </>)}
               <div className="mt-10 leading-loose">
                 <h1 className="font-[Epilogue-500] text-[#000000] dark:text-[#ffffff] text-[1.1rem] mb-1">
                   Security
