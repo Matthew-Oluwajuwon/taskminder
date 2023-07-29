@@ -1,14 +1,15 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const serverless = require("serverless-http")
 const cors = require("cors");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const { authentication } = require("./routes/Authentication");
-const { ongoingTodoRouter } = require("./routes/OngoingTodos");
-const { completedTodoRouter } = require("./routes/CompletedTodos");
-const { pendingTodoRouter } = require("./routes/PendingTodos");
-const { upcomingTodoRouter } = require("./routes/UpcomingTodos");
+const { authentication } = require("./src/routes/Authentication");
+const { ongoingTodoRouter } = require("./src/routes/OngoingTodos");
+const { completedTodoRouter } = require("./src/routes/CompletedTodos");
+const { pendingTodoRouter } = require("./src/routes/PendingTodos");
+const { upcomingTodoRouter } = require("./src/routes/UpcomingTodos");
 
 const app = express();
 
@@ -47,7 +48,7 @@ const specs = swaggerJsdoc({
       },
     ],
   },
-  apis: ["./routes/*.js"],
+  apis: ["./src/routes/*.js"],
 });
 
 app.use(
@@ -85,3 +86,5 @@ mongoose
   .catch((error) => {
     console.log("Connection to database failed: " + error.message);
   });
+
+  module.exports.handler = serverless(app)
