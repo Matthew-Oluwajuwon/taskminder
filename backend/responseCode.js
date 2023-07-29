@@ -1,4 +1,4 @@
-const ResponsCode = {
+const ResponseCode = {
     SUCCESSFUL: "00",
     BAD_REQUEST: "92",
     INTERNAL_SERVER_ERROR: "95",
@@ -8,4 +8,4 @@ const ResponsCode = {
     INVALID_TOKEN: "80"
 }
 
-exports.ResponsCode = ResponsCode
+exports.ResponseCode = ResponseCode

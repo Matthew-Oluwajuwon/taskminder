@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
-const { ResponsCode } = require("../responseCode");
+const { ResponseCode } = require("../responseCode");
 
 const auth = (request, response, next) => {
   if (!request.header("Authorization"))
     return response.status(401).send({
-      responseCode: ResponsCode.UNAUTHORIZED,
+      responseCode: ResponseCode.UNAUTHORIZED,
       responseMessage:
         "Authenticate request with a valid token passed in the request header, concatenated with Bearer",
       data: null,
@@ -13,7 +13,7 @@ const auth = (request, response, next) => {
 
   if (!token)
     return response.status(401).send({
-      responseCode: ResponsCode.UNAUTHORIZED,
+      responseCode: ResponseCode.UNAUTHORIZED,
       responseMessage: "Unauthorized",
       data: null,
     });
@@ -25,7 +25,7 @@ const auth = (request, response, next) => {
     next();
   } catch (error) {
     response.status(400).send({
-      responseCode: ResponsCode.INVALID_TOKEN,
+      responseCode: ResponseCode.INVALID_TOKEN,
       responseMessage: "Token provided is invalid",
       data: null,
     });

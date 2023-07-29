@@ -1,5 +1,5 @@
-const { Users } = require("../models/Authentication");
-const { ResponsCode } = require("../responseCode");
+const { Users } = require("../../models/Authentication");
+const { ResponseCode } = require("../../responseCode");
 const Joi = require("joi");
 
 
@@ -11,7 +11,7 @@ const uploadProfileImage = async (request, response) => {
     const { error } = schema.validate(request.body);
     if (error)
       return response.status(400).send({
-        responseCode: ResponsCode.BAD_REQUEST,
+        responseCode: ResponseCode.BAD_REQUEST,
         responseMessage: error.details[0]?.message,
         data: null,
       });
@@ -19,7 +19,7 @@ const uploadProfileImage = async (request, response) => {
     const profileImage = request.body.profileImage;
     if (!profileImage)
       return response.status(400).send({
-        responseCode: ResponsCode.BAD_REQUEST,
+        responseCode: ResponseCode.BAD_REQUEST,
         responseMessage: "profile image is required",
         data: null,
       });
@@ -28,7 +28,7 @@ const uploadProfileImage = async (request, response) => {
       
     if (!user) {
       return response.status(400).send({
-        responseCode: ResponsCode.BAD_REQUEST,
+        responseCode: ResponseCode.BAD_REQUEST,
         responseMessage:
           "No user found, kindly register to upload profile image",
         data: null,
@@ -37,7 +37,7 @@ const uploadProfileImage = async (request, response) => {
       user.profileImage = profileImage;
       await user.save();
       response.status(200).send({
-        responseCode: ResponsCode.SUCCESSFUL,
+        responseCode: ResponseCode.SUCCESSFUL,
         responseMessage: "Profile image uploaded successfully",
         data: {
           _id: user._id,
@@ -50,7 +50,7 @@ const uploadProfileImage = async (request, response) => {
     }
   } catch (error) {
     response.status(500).send({
-      responseCode: ResponsCode.INTERNAL_SERVER_ERROR,
+      responseCode: ResponseCode.INTERNAL_SERVER_ERROR,
       responseMessage: "Internal server error " + error.message,
       data: null,
     });

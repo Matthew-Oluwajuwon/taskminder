@@ -1,8 +1,8 @@
-const { Users } = require("../models/Authentication");
+const { Users } = require("../../models/Authentication");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
-const { createToken } = require("../utils/createToken");
-const { ResponsCode } = require("../responseCode");
+const { createToken } = require("../../utils/createToken");
+const { ResponseCode } = require("../../responseCode");
 
 
 const signin = async (request, response) => {
@@ -14,7 +14,7 @@ const signin = async (request, response) => {
     const { error } = schema.validate(request.body);
     if (error)
       return response.status(400).send({
-        responseCode: ResponsCode.BAD_REQUEST,
+        responseCode: ResponseCode.BAD_REQUEST,
         responseMessage: error.details[0]?.message,
         data: null,
       });
@@ -23,7 +23,7 @@ const signin = async (request, response) => {
       let user = await Users.findOne({ email: request.body.email });
       if (!user)
         return response.status(400).send({
-          responseCode: ResponsCode.BAD_REQUEST,
+          responseCode: ResponseCode.BAD_REQUEST,
           responseMessage: "Invalid email or password",
           data: null,
         });
@@ -34,13 +34,13 @@ const signin = async (request, response) => {
       );
       if (!validatePassword)
         return response.status(400).send({
-          responseCode: ResponsCode.BAD_REQUEST,
+          responseCode: ResponseCode.BAD_REQUEST,
           responseMessage: "Invalid email or password",
           data: null, 
         });
         
         if(!user.isVerified) return response.send({
-          responseCode: ResponsCode.SUCCESSFUL,
+          responseCode: ResponseCode.SUCCESSFUL,
           responseMessage: "Kindly verify your account to proceed",
           data: {
             _id: user._id,
@@ -54,7 +54,7 @@ const signin = async (request, response) => {
       const token = createToken(user)
   
       response.status(200).send({
-        responseCode: ResponsCode.SUCCESSFUL,
+        responseCode: ResponseCode.SUCCESSFUL,
         responseMessage: "Login successful",
         data: {
           _id: user._id,
@@ -68,7 +68,7 @@ const signin = async (request, response) => {
       });
     } catch (error) {
       response.status(500).send({
-        responseCode: ResponsCode.INTERNAL_SERVER_ERROR,
+        responseCode: ResponseCode.INTERNAL_SERVER_ERROR,
         responseMessage: "Internal server error",
         data: null,
       });

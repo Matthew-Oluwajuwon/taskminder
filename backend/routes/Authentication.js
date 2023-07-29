@@ -65,6 +65,26 @@
  *           description: url to the image link
  *       example:
  *         profileImage: ""
+ *     Update Profile:
+ *       type: object
+ *       required:
+ *         - username
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: name to update the username
+ *       example:
+ *         username: ""
+ *     Get User Profile:
+ *       type: object
+ *       required:
+ *         - profileImage
+ *       properties:
+ *         profileImage:
+ *           type: string
+ *           description: url to the image link
+ *       example:
+ *         profileImage: ""
  */
 
 /**
@@ -148,15 +168,36 @@
  *                      $ref: '#/components/schemas/Profile Image Upload'
  *             500:
  *               description: Some server error
+ * /api/v1/authentication/updateProfile:
+ *       post:
+ *          summary: update user profile
+ *          tags: [authentication-controller]
+ *          requestBody:
+ *            required: true
+ *            content:
+ *                application/json:
+ *                  schema:
+ *                   $ref: '#/components/schemas/Update Profile'
+ *          responses:
+ *             200:
+ *               description: update user profile.
+ *               content:
+ *                  application/json:
+ *                    schema:
+ *                      $ref: '#/components/schemas/Update Profile'
+ *             500:
+ *               description: Some server error
  *
  */
 
 const express = require("express");
-const { signUp } = require("../controllers/signup.controller");
-const { signin } = require("../controllers/signin.controller");
-const { otpVerification } = require("../controllers/otpVerification");
-const { uploadProfileImage } = require("../controllers/uploadProfileImage");
+const { signUp } = require("../controllers/Authentication/signup.controller");
+const { signin } = require("../controllers/Authentication/signin.controller");
+const { otpVerification } = require("../controllers/Authentication/otpVerification");
+const { uploadProfileImage } = require("../controllers/Authentication/uploadProfileImage.controller");
 const { auth } = require("../middleware/Authentiation");
+const { updateProfile } = require("../controllers/Authentication/updateProfile.controller");
+const { getUserProfile } = require("../controllers/Authentication/getUserProfile.controller");
 
 const router = express.Router();
 
@@ -164,5 +205,7 @@ router.post("/signup", signUp);
 router.post("/signin", signin);
 router.post("/otpVerification", otpVerification);
 router.post("/uploadProfileImage", auth, uploadProfileImage)
+router.post("/updateProfile", auth, updateProfile)
+router.get("/getUserProfile", auth, getUserProfile)
 
 exports.authentication = router;

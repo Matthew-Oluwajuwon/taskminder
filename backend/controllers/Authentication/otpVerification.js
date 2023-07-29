@@ -1,13 +1,13 @@
-const { Users } = require("../models/Authentication");
-const { ResponsCode } = require("../responseCode");
-const { createToken } = require("../utils/createToken");
+const { Users } = require("../../models/Authentication");
+const { ResponseCode } = require("../../responseCode");
+const { createToken } = require("../../utils/createToken");
 
 const otpVerification = async (request, response) => {
   try {
     const otp = request.body.otp;
     if (!otp)
       return response.status(400).send({
-        responseCode: ResponsCode.INVALID_OTP,
+        responseCode: ResponseCode.INVALID_OTP,
         responseMessage: "Invalid OTP",
         data: null,
       });
@@ -23,7 +23,7 @@ const otpVerification = async (request, response) => {
       const token = createToken(user);
 
       response.status(200).send({
-        responseCode: ResponsCode.SUCCESSFUL,
+        responseCode: ResponseCode.SUCCESSFUL,
         responseMessage: "Email verification successful, login to continue",
         data: {
           _id: user._id,
@@ -35,14 +35,14 @@ const otpVerification = async (request, response) => {
       });
     } else {
       response.status(400).send({
-        responseCode: ResponsCode.INVALID_OTP,
+        responseCode: ResponseCode.INVALID_OTP,
         responseMessage: "Email verification failed, Invalid OTP",
         data: null,
       });
     }
   } catch (error) {
     response.status(500).send({
-      responseCode: ResponsCode.INTERNAL_SERVER_ERROR,
+      responseCode: ResponseCode.INTERNAL_SERVER_ERROR,
       responseMessage: "Internal server error " + error.message,
       data: null,
     });

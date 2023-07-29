@@ -1,8 +1,8 @@
-const { Users } = require("../models/Authentication");
+const { Users } = require("../../models/Authentication");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
-const { sendVerificationMail } = require("../utils/sendVerificationMail");
-const { ResponsCode } = require("../responseCode");
+const { sendVerificationMail } = require("../../utils/sendVerificationMail");
+const { ResponseCode } = require("../../responseCode");
 
 
 const signUp = async (request, response) => {
@@ -20,7 +20,7 @@ const signUp = async (request, response) => {
   //  sending the error mesage to client
   if (error)
     return response.status(400).send({
-      responseCode: ResponsCode.BAD_REQUEST,
+      responseCode: ResponseCode.BAD_REQUEST,
       responseMessage: error.details[0]?.message,
       data: null,
     });
@@ -33,7 +33,7 @@ const signUp = async (request, response) => {
     // if user exist with the same email, send an error back to the client
     if (user)
       return response.status(400).send({
-        responseCode: ResponsCode.DATA_DUPLICATION,
+        responseCode: ResponseCode.DATA_DUPLICATION,
         responseMessage: request.body.email + " already exist",
         data: null,
       });
@@ -55,7 +55,7 @@ const signUp = async (request, response) => {
      await user.save();
     sendVerificationMail(user)
     response.status(201).send({
-      responseCode: ResponsCode.SUCCESSFUL,
+      responseCode: ResponseCode.SUCCESSFUL,
       responseMessage: "Registration successful",
       data: {
         _id: user._id,
