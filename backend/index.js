@@ -46,7 +46,7 @@ const specs = swaggerJsdoc({
       {
         JWT: [],
       },
-    ],
+    ], 
   },
   apis: ["./src/routes/*.js"],
 });
