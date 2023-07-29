@@ -17,9 +17,16 @@ import { BsCalendar } from "react-icons/bs"
 import { useSetRequest } from "../../custom-hooks/useSetRequest"
 import { useUploadProfileImageMutation } from "../../store"
 import useAuthentication from "../../custom-hooks/useAuthentication"
-import { useAppSelector } from "../../store/hooks"
+import { useAppSelector,useAppDispatch } from "../../store/hooks"
+import { CustomInput } from "../../common/components/forms/Input.component"
+import { setField } from "../../store"
+import {motion} from "framer-motion"
+import {formMotion} from "../../utils/motion"
+
 
 export const Dashboard: React.FC = () => {
+    const dispatch = useAppDispatch()
+
   useLayoutEffect(() => {
     document.title = "Dashboard | TaskMinder"
   }, [])
@@ -30,6 +37,9 @@ export const Dashboard: React.FC = () => {
   const date = new Date().toUTCString().slice(5, 16)
   const [tabKey, setTabKey] = useState<string>("1")
   const [openDrawer, setOpenDrawer] = useState<boolean>(false)
+
+  //state variable to control if the edit profile section is showing or not
+  const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false)
 
   const handleTabChange = (e: string) => {
     setTabKey(e)
@@ -232,7 +242,67 @@ export const Dashboard: React.FC = () => {
               </Button>
             </Upload>
             <div className="mt-10 leading-loose text-[#000000] dark:text-[#ffffff]">
-              <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
+          
+              {/* check if isEditingProfile === true before rendering the edit profile section and render just personal information if it is false */}
+              {isEditingProfile ? (
+             <> <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
+               Edit Personal Information
+              </h1> <motion.div className=" mt-4"  variants={formMotion()}
+                initial="hidden"
+                animate="show">
+                <div className="flex gap-2">
+                  <CustomInput
+                    name="username"
+                    type="text"
+                    label="Edit Username"
+                    onChange={(e) =>
+                      dispatch(setField({ key: "username", value: e.target.value }))
+                    }
+                    value={userInfo.username}
+                    rule={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                    placeholder="e.g. matthewTheChef"
+                  />  
+                  <CustomInput 
+                    name="email"
+                    type="email"
+                    label="Edit Email Address"  
+                    onChange={(e) =>
+                      dispatch(setField({ key: "email", value: e.target.value }))
+                    }
+                    value={userInfo.email}
+                    rule={[
+                    {
+                      required: true,
+                      pattern: new RegExp(
+                        /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+                      ),
+                      message: "Invalid Email",
+                    },
+                  ]}/>
+                </div>
+              <div className="py-2 flex gap-4 items-center">
+                {/* button to set isEditing to false so as remove the section from the dom */}
+                <Button
+              type="primary"
+              className="text-[#F7E8E6] bg-primary-color flex items-center justify-center py-2 md:py-5 -px-2 rounded-none font-[Epilogue-600] text-[1rem]"
+              onClick={() =>{setIsEditingProfile(false)}}
+            >
+              Cancel
+              </Button>
+                <Button
+              type="primary"
+              className="bg-[#F7E8E6] text-primary-color flex items-center justify-center py-2 md:py-5 -px-2 rounded-none font-[Epilogue-600] text-[1rem]"
+              // onClick={() =>{}}
+            >
+              Save
+              </Button>
+              </div>
+              </motion.div></>) : (<>
+                  <h1 className="font-[Epilogue-500] text-[1.1rem] mb-1">
                 Personal Information
               </h1>
               <div className="text-[#5C5C5C] dark:text-[#ffffff] font-[Epilogue-400] text-[0.8rem]">
@@ -248,10 +318,13 @@ export const Dashboard: React.FC = () => {
                       {userInfo.email}
                     </span>
                   </h2>
-                <button className="text-primary-color w-fit cursor-pointer text-[0.8rem] font-[Epilogue-400]">
+                  {/* toggler button to show or hide edit section */}
+                <button className="text-primary-color w-fit cursor-pointer text-[0.8rem] 
+                font-[Epilogue-400]" onClick={()=>{setIsEditingProfile(!isEditingProfile)}}>
                   Edit
                 </button>
               </div>
+              </>)}
               <div className="mt-10 leading-loose">
                 <h1 className="font-[Epilogue-500] text-[#000000] dark:text-[#ffffff] text-[1.1rem] mb-1">
                   Security
