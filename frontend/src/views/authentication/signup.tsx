@@ -27,7 +27,7 @@ export const SignUp: React.FC = () => {
     <div className="grid gap-3">
       {contentData.map((item, index) => (
         <span key={index} className="flex gap-3 items-center">
-          <img src={item.img} className="w-[1.50rem]" alt="gray-checker-img" />
+          <img src={item.img} className="w-[1.50rem]" alt="checker-img" />
           <p>{item.text}</p>
         </span>
       ))}

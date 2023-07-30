@@ -9,7 +9,9 @@ import { ApiRequest } from "../models/client/request"
 
 export const useAuthQuery = () => {
   const dispatch = useAppDispatch()
-  const state = useAppSelector((state) => state.auth)
+  const state = useAppSelector((state) => {
+    return state.auth
+  })
   const setResetInputField = useCallback(
     (value: any, key: keyof ApiRequest.Auth) => {
       const UpperCase = /(?=.*[A-Z])/
