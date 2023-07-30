@@ -206,6 +206,24 @@ router.post("/signin", signin);
 router.post("/otpVerification", otpVerification);
 router.post("/uploadProfileImage", auth, uploadProfileImage)
 router.post("/updateProfile", auth, updateProfile)
+
+/**
+ * @swagger
+ * 
+ * /api/v1/authentication/getUserProfile:
+ *       get:
+ *          summary: get user profile
+ *          tags: [authentication-controller]
+ *          responses:
+ *             200:
+ *               description: get user profile.
+ *               content:
+ *                  application/json:
+ *                    schema:
+ *                      $ref: '#/components/schemas/Update Profile'
+ *             500:
+ *               description: Some server error
+*/
 router.get("/getUserProfile", auth, getUserProfile)
 
 exports.authentication = router;
