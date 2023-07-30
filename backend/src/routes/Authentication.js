@@ -87,6 +87,26 @@
  *         profileImage: ""
  */
 
+const express = require("express");
+const { signUp } = require("../controllers/Authentication/signup.controller");
+const { signin } = require("../controllers/Authentication/signin.controller");
+const {
+  otpVerification,
+} = require("../controllers/Authentication/otpVerification");
+const {
+  uploadProfileImage,
+} = require("../controllers/Authentication/uploadProfileImage.controller");
+const { auth } = require("../middleware/Authentiation");
+const {
+  updateProfile,
+} = require("../controllers/Authentication/updateProfile.controller");
+const {
+  getUserProfile,
+} = require("../controllers/Authentication/getUserProfile.controller");
+const { sendVerificationMailForPasswordChange } = require("../controllers/Authentication/sendMailorPasswordChange.controller");
+
+const router = express.Router();
+
 /**
  * @swagger
  * tags:
@@ -111,6 +131,13 @@
  *                      $ref: '#/components/schemas/Signup'
  *             500:
  *               description: Some server error
+ *
+ */
+
+router.post("/signup", signUp);
+/**
+ * @swagger
+ *
  * /api/v1/authentication/signin:
  *       post:
  *          summary: Login to your account
@@ -130,6 +157,12 @@
  *                      $ref: '#/components/schemas/Signin'
  *             500:
  *               description: Some server error
+ * */
+router.post("/signin", signin);
+
+/**
+ * @swagger
+ *
  * /api/v1/authentication/otpVerification:
  *       post:
  *          summary: Verify your email address
@@ -149,6 +182,12 @@
  *                      $ref: '#/components/schemas/Otp verification'
  *             500:
  *               description: Some server error
+ * */
+router.post("/otpVerification", otpVerification);
+
+/**
+ * @swagger
+ *
  * /api/v1/authentication/uploadProfileImage:
  *       post:
  *          summary: upload your profile image
@@ -168,6 +207,11 @@
  *                      $ref: '#/components/schemas/Profile Image Upload'
  *             500:
  *               description: Some server error
+ * */
+router.post("/uploadProfileImage", auth, uploadProfileImage);
+
+/**
+ * @swagger
  * /api/v1/authentication/updateProfile:
  *       post:
  *          summary: update user profile
@@ -188,28 +232,12 @@
  *             500:
  *               description: Some server error
  *
- */
-
-const express = require("express");
-const { signUp } = require("../controllers/Authentication/signup.controller");
-const { signin } = require("../controllers/Authentication/signin.controller");
-const { otpVerification } = require("../controllers/Authentication/otpVerification");
-const { uploadProfileImage } = require("../controllers/Authentication/uploadProfileImage.controller");
-const { auth } = require("../middleware/Authentiation");
-const { updateProfile } = require("../controllers/Authentication/updateProfile.controller");
-const { getUserProfile } = require("../controllers/Authentication/getUserProfile.controller");
-
-const router = express.Router();
-
-router.post("/signup", signUp);
-router.post("/signin", signin);
-router.post("/otpVerification", otpVerification);
-router.post("/uploadProfileImage", auth, uploadProfileImage)
-router.post("/updateProfile", auth, updateProfile)
+ * */
+router.post("/updateProfile", auth, updateProfile);
 
 /**
  * @swagger
- * 
+ *
  * /api/v1/authentication/getUserProfile:
  *       get:
  *          summary: get user profile
@@ -217,13 +245,26 @@ router.post("/updateProfile", auth, updateProfile)
  *          responses:
  *             200:
  *               description: get user profile.
- *               content:
- *                  application/json:
- *                    schema:
- *                      $ref: '#/components/schemas/Update Profile'
  *             500:
  *               description: Some server error
-*/
-router.get("/getUserProfile", auth, getUserProfile)
+ */
+
+router.get("/getUserProfile", auth, getUserProfile);
+
+/**
+ * @swagger
+ *
+ * /api/v1/authentication/sendVerificationMailForPasswordChange:
+ *       post:
+ *          summary: get user profile
+ *          tags: [authentication-controller]
+ *          responses:
+ *             200:
+ *               description: get user profile.
+ *             500:
+ *               description: Some server error
+ */
+
+router.post("/sendVerificationMailForPasswordChange", auth, sendVerificationMailForPasswordChange)
 
 exports.authentication = router;

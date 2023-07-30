@@ -67,7 +67,7 @@ const signUp = async (request, response) => {
     });
   } catch (error) {
     response.status(500).send({
-      responseCode: "95",
+      responseCode: ResponseCode.INTERNAL_SERVER_ERROR,
       responseMessage: "Internal server error",
       data: null,
     });

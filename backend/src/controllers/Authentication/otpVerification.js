@@ -30,6 +30,7 @@ const otpVerification = async (request, response) => {
           email: user.email,
           username: user.username,
           isVerified: user?.isVerified,
+          profileImage: user?.profileImage,
           token,
         },
       });
